@@ -2,7 +2,7 @@
 data <- father.son
 diffdata <- presidents
 
-swirl_options(swirl_logging = TRUE)
+swirl_options(swirl_logging = FALSE)
 
 data_diff <- c()
 
