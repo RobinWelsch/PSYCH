@@ -1,10 +1,10 @@
 - Class: meta
-  Course: Psychological Statistics You Can Handle
-  Lesson: One Sample T-Test
-  Author: Kevin R. Carriere, Jason Kilgore
+  Course: PsychMetHCI - Statistical Methods in Human-Computer Interaction
+  Lesson: One_Sample_T_Tests
+  Author: Robin Welsch & Tapio Tuloisela
   Type: Standard
-  Organization: Washington & Jefferson College
-  Version: 3.0.0
+  Organization: Aalto University
+  Version: 4.0.0
 
 - Class: script
   Output: Here are some notes for this module. When you've saved the notes, type submit().
@@ -42,14 +42,26 @@
   CorrectAnswer: purchases |> t.test(MPEP_self ~ 1, mu=5, data=_)
   AnswerTests: omnitest(correctExpr='purchases |> t.test(MPEP_self ~ 1, mu=5, data=_)')
   Hint: purchases |> t.test(MPEP_self ~ 1, mu=5, data=_)
-  
+
 - Class: text
   Output: That got us all of the information besides the effect size and the confidence interval of the effect size.
+
+- Class: text
+  Output: Before we get into that last part of the sentence - the effect size (reported as d="0.65") - let's first understand what an effect size actually is and why we care about it.
+
+- Class: text
+  Output: An effect size tells us how big or meaningful a difference is, not just whether it exists. Think of it this way - a t-test tells us "Yes, there's probably a real difference," but effect size tells us "Here's how big that difference is in practical terms."
+
+- Class: text
+  Output: For example, imagine we find that a new study method significantly improves test scores by 2 points on average. That's statistically significant, but is 2 points out of 100 a big deal? Probably not. But if it's 2 points out of 10, that's huge! Effect size helps us distinguish between "statistically significant" and "practically meaningful."
+
+- Class: text
+  Output: Cohen's d is the most common effect size for t-tests. It's interpreted roughly as - Small effect = 0.2, Medium effect = 0.5, Large effect = 0.8. So when the study reported d = 0.65, that's considered a moderately large effect - people really did believe that someone who knows about their experiential purchases would better understand their true self compared to the scale midpoint.
 
 - Class: cmd_question
   Output: We have a function cohens_d() from the rstatix package to get those results. We will pipe (|>) our dataset (purchases) into cohens_d() with three arguments - MPEP_self ~ 1 (just like our t.test), mu=5 (again, the same), and ci=TRUE. Our notes give a list of other ways to code this, as well as other packages.
   CorrectAnswer: purchases |>  cohens_d(MPEP_self ~ 1, mu=5, ci=TRUE)
-  AnswerTests: omnitest(correctExpr='purchases |>  cohens_d(MPEP_self ~ 1, mu=5, ci=TRUE)')
+  AnswerTests: any_of_exprs('purchases |>  cohens_d(MPEP_self ~ 1, mu=5, ci=TRUE)', 'purchases |>  rstatix::cohens_d(MPEP_self ~ 1, mu=5, ci=TRUE)')
   Hint: purchases |>  cohens_d(MPEP_self ~ 1, mu=5, ci=TRUE)
 
 - Class: text
@@ -103,8 +115,8 @@
 - Class: cmd_question
   Output: The function for Shapiro-Wilk is shapiro_test() in the rstatix package. Let's practice our piping technique, so take violence and |> pipe it into shapiro_test(), passing the single argument C .
   CorrectAnswer: violence |> shapiro_test(C)
-  AnswerTests: omnitest(correctExpr='violence |> shapiro_test(C)')
-  Hint: violence |> shapiro_test(C)
+  AnswerTests: any_of_exprs('violence |> shapiro_test(C)', 'violence |> rstatix::shapiro_test(C)')
+  Hint: violence |> shapiro_test(C) or violence |> rstatix::shapiro_test(C)
 
 - Class: text
   Output: The null hypothesis is that there is no difference between the distribution of the variable and the normal distribution. If we find sufficient evidence to reject that null hypothesis (conventionally, at an alpha of .05), then we reject the hypothesis that there is no difference between the distribution of the variable and the normal distribution.
@@ -116,12 +128,12 @@
   Output: "They write - A Wilcoxon signed rank test showed that the average c (M = .11, SE = .04) also was significantly higher than zero (W = 4044.5, p = .018)."
 
 - Class: text
-  Output:  Let's first practice our one sample Wilcoxon sign-ranked test. Since there is no predictor, we need to tell R that we are passing what is known as a null model - there are no predictors. We want to see if C is greater than zero.
+  Output: Let's first practice our one sample Wilcoxon sign-ranked test. Since there is no predictor, we need to tell R that we are passing what is known as a null model - there are no predictors. We want to see if C is greater than zero.
   
 - Class: cmd_question
   Output: To do that, take our dataset, violence, and pipe (|>) into the wilcox_test() function from the rstatix library, passing two arguments - C ~ 1 and mu=0. (mu=0 is the default, but it's good practice to know what we're doing).
   CorrectAnswer: violence |> wilcox_test(C ~ 1, mu=0)
-  AnswerTests: omnitest(correctExpr='violence |> wilcox_test(C ~ 1, mu=0)')
+  AnswerTests: any_of_exprs('violence |> wilcox_test(C ~ 1, mu=0)', 'violence |> rstatix::wilcox_test(C ~ 1, mu=0)')
   Hint: violence |> wilcox_test(C ~ 1, mu=0)
 
 - Class: script

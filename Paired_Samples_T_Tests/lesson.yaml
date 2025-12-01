@@ -1,10 +1,10 @@
 - Class: meta
-  Course: Psychological Statistics You Can Handle
-  Lesson: Paired Samples T-Test
-  Author: Kevin R. Carriere & Jason Kilgore
+  Course: PsychMetHCI - Statistical Methods in Human-Computer Interaction
+  Lesson: Paired_Samples_T_Tests
+  Author: Robin Welsch & Tapio Tuloisela
   Type: Standard
-  Organization: Washington & Jefferson College
-  Version: 3.1.0
+  Organization: Aalto University
+  Version: 4.0.0
 
 - Class: script
   Output: Here are some notes for this module. When you've saved the notes, type submit().
@@ -111,7 +111,7 @@
   Hint: habits |> t.test(Pair(mood, habit) ~ 1, data=_)
 
 - Class: text
-  Output: Before we get into that last part of the sentence - the effect size (d="1.14") - we need to put up some yellow warning lights. 
+  Output: The effect size was introduced in the module "One-Sample T-Tests". Before we get into that last part of the sentence - the effect size (reported as d="1.14") - we need to put up some yellow warning lights. 
   
 - Class: text
   Output: It turns out it is surprisingly tricky to agree upon a 'correct' effect size for a paired t-test. We talk through and provide some math and code to show this in your Notes, and provide some readings that could be interesting.  
@@ -121,7 +121,7 @@
   Output: It comes down to "How do we (or, do we even) account for the fact we've measured the same person twice?" That has complicated implications for effect size calculation.
 
 - Class: text
-  Output: What we present is not the 'only' way to calculate effect sizes. We hesitate to even call our method 'correct'. How about we agree that it is simply the one we intend to use in this Module.
+  Output: What we present is not the 'only' way to calculate effect sizes. We hesitate to even call our method 'correct'. However, we agree that it is simply the one we intend to use in this Module.
   
 - Class: cmd_question
   Output: Let's get their effect size. To do this, we're going to do something a bit new - we're going to tell R that we want the package effectsize's version of rm_d(). First, start with our data, habits, and pipe it. We then must write effectsize::rm_d() as the function's name to do that. We will pass it four arguments - Pair(mood, habit) ~ 1, adjust=FALSE, method="rm", and data=_. 
@@ -152,5 +152,5 @@
 
 #37
 - Class: text
-  Output: In this lesson, we showed you two ways to calculate a within-subjects t-test. The way we recommend is through long datasets and pipe-friendly methods. This would require you to go over the Pivoting Datasets Module. If you don't have your data in the long format (multiple rows per participant), you should default to the clunkier Pair() method. 
+  Output: In this lesson, we showed you two ways to calculate a within-subjects t-test. The way we recommend is through long datasets and pipe-friendly methods. This would require you to go over the Pivoting Datasets Module (number 29). If you don't have your data in the long format (multiple rows per participant), you should default to the clunkier Pair() method. 
 
