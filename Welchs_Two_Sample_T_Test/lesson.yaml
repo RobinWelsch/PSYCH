@@ -1,10 +1,10 @@
 - Class: meta
-  Course: Psychological Statistics You Can Handle
-  Lesson: Welch's Two-Sample T-Tests
-  Author: Kevin R. Carriere, Jason Kilgore
+  Course: PsychMetHCI - Statistical Methods in Human-Computer Interaction
+  Lesson: Welchs_Two_Sample_T_Test
+  Author: Robin Welsch & Tapio Tuloisela
   Type: Standard
-  Organization: Washington & Jefferson College
-  Version: 2.4.3
+  Organization: Aalto University
+  Version: 4.0.0
 
 - Class: script
   Output: To save the notes for this module, copy and paste the code provided into your RNotebook. Type submit() when you have finished saving these notes. 
@@ -69,7 +69,7 @@
   Output: The authors write - "A Welch two-sample t-test was conducted to test the effect of condition on perceptions of morality. Participants viewed the target who concealed as less moral (M = 1.74, SE = 0.08) than the target who disclosed (M = 3.49, SE = 0.09; t(404.41) = 14.54, p < .001, d = 1.39; see Fig. 1 for all Study 1 results)."
   
 - Class: text
-  Output: Prior, they wrote, "Homogeneity of variance was assessed for each model prior to analysis. Student’s t-tests were computed where that assumption was met, and Welch's t-tests were conducted where it was not."
+  Output: Prior, they wrote, "Homogeneity of variance was assessed for each model prior to analysis. Student's t-tests were computed where that assumption was met, and Welch's t-tests were conducted where it was not."
 
 - Class: text
   Output: Thus, the authors suggest that the variances of perceptions of morality are not equal between the groups. How can we test that? 
@@ -77,7 +77,7 @@
 - Class: cmd_question
   Output: Let's use the levene_test() function from the rstatix package to do this. Start by piping (|>) your dataset (concealed) into levene_test(). The equation will take a single argument, which will be moral ~ condition. Try that now. 
   CorrectAnswer: concealed |> levene_test(moral~condition)
-  AnswerTests: omnitest(correctExpr='concealed |> levene_test(moral~condition)')
+  AnswerTests: any_of_exprs('concealed |> levene_test(moral~condition)', 'concealed |> rstatix::levene_test(moral~condition)')
   Hint: concealed |> levene_test(moral~condition)
 
 - Class: text
@@ -89,7 +89,7 @@
   FigureType: new
 
 - Class: text
-  Output: Now that we have shown the unequal variances, we can use Welch's T-Test. The great thing about Welch's Two two-sample t-test is that it is the default t-test in R. 
+  Output: Now that we have shown the unequal variances, we can use Welch's T-Test. The great thing about Welch's two-sample t-test is that it is the default t-test in R. 
   
 - Class: cmd_question
   Output: Let's run a Welch's t-test on the data, seeing if concealing a hidden identity changes perceptions of morality. Take our data, concealed, and pipe it (|>) into the t.test() function. Pass that function three arguments, moral~condition, data=_, and var.equal=FALSE.
@@ -128,7 +128,7 @@
 - Class: cmd_question
   Output: To get their effect size, we need to use a new function, and we will pipe (|>) our data (concealed) into it.  In the lsr library, there is a function called cohensD(). It takes at least two inputs- the formula (moral ~ condition) and the data (for us because we are piping, remember data=_). Let's try just those two inputs now.
   CorrectAnswer: concealed |> cohensD(moral~condition, data=_)
-  AnswerTests: omnitest(correctExpr='concealed |> cohensD(moral~condition, data=_)')
+  AnswerTests: any_of_exprs('concealed |> cohensD(moral~condition, data=_)', 'concealed |> lsr::cohensD(moral~condition, data=_)')
   Hint: concealed |> cohensD(moral~condition, data=_)
 
 - Class: text
@@ -141,6 +141,6 @@
   Output: Since we rarely have a study with groups as small as 5, it seems best practice to use Welch's as the default, mainly due to a minimal loss of power.
   
 - Class: text
-  Output: Citations are also in the Notes; see de Winter, J. C. F. (2013). Using the Student’s t-test with extremely small sample sizes. Practical Assessment, Research, and Evaluation, 18(10). doi.org/10.7275/E4R6-DJ05 and Delacre, M., Lakens, D., & Leys, C. (2017). Why Psychologists Should by Default Use Welch’s t-test Instead of Student’s t-test. International Review of Social Psychology, 30(1), 92–101. doi.org/10.5334/irsp.82
+  Output: Citations are also in the Notes; see de Winter, J. C. F. (2013). Using the Student's t-test with extremely small sample sizes. Practical Assessment, Research, and Evaluation, 18(10). doi.org/10.7275/E4R6-DJ05 and Delacre, M., Lakens, D., & Leys, C. (2017). Why Psychologists Should by Default Use Welch's t-test Instead of Student's t-test. International Review of Social Psychology, 30(1), 92–101. doi.org/10.5334/irsp.82
   
     
