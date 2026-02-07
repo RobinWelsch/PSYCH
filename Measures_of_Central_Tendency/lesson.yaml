@@ -24,7 +24,7 @@
 
 #5
 - Class: text
-  Output: "Mode is defined as most commonly occuring value. "
+  Output: "Mode is defined as most commonly occurring value. "
 
 #6
 - Class: text
@@ -49,7 +49,7 @@
 
 #10
 - Class: text
-  Output: "So, we can use the mode when the variable is nominal. As we learned in previous lessons, this is when a variable just goes by name, and there's no ranking. \n\n Clearly, there's no difference between a Designed Hitter (DH) and a Pitcher (P)."
+  Output: "So, we can use the mode when the variable is nominal. As we learned in previous lessons, this is when a variable just goes by name, and there's no ranking. \n\n Clearly, there's no difference between a Designated Hitter (DH) and a Pitcher (P)."
 
 #11
 - Class: text
@@ -122,7 +122,7 @@
 
 #24
 - Class: cmd_question
-  Output: "There's two other ways we can look at this. The simpliest is just passing baseball$atbats to the function median(). Do that now."
+  Output: "There's two other ways we can look at this. The simplest is just passing baseball$atbats to the function median(). Do that now."
   CorrectAnswer: median(baseball$atbats)
   AnswerTests: omnitest(correctExpr='median(baseball$atbats)')
 
@@ -157,14 +157,14 @@
 #31
 - Class: mult_question
   Output: "So, let's think about this. We know there are many observations to the left. Is the median probably higher or lower than the mode?"
-  AnswerChoices: Lower; Higher; Equal to;
+  AnswerChoices: Lower;Higher;Equal to
   CorrectAnswer: Higher
   AnswerTests: omnitest(correctVal='Higher')
 
 #32
 - Class: mult_question
   Output: "So, let's think about this. We know there are many observations to the left. Is the median probably higher or lower than the mean?"
-  AnswerChoices: Lower; Higher; Equal to;
+  AnswerChoices: Lower;Higher;Equal to
   CorrectAnswer: Lower
   AnswerTests: omnitest(correctVal='Lower')
 
@@ -176,7 +176,7 @@
 
 #34
 - Class: text
-  Output: "Mean is the final measure of central tendency. This is the average of all values in a variable. We're always going to be talking about two different kinds of means. \n\n The sample mean, which is almost always what we will have - is the sum of all values divided by the number of values. This is displayed as Xbar.  \n\n And there is the  population mean, which is displayed by the lower case greek symbol sigma."
+  Output: "Mean is the final measure of central tendency. This is the average of all values in a variable. We're always going to be talking about two different kinds of means. \n\n The sample mean, which is almost always what we will have - is the sum of all values divided by the number of values. This is displayed as Xbar.  \n\n And there is the  population mean, which is displayed by the lower case greek symbol mu."
 
 #35
 - Class: text

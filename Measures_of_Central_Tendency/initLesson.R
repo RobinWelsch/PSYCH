@@ -43,13 +43,13 @@ Rate <- rep(c( .019, .03, .035, .05, .076, .083, .081, .076, .076, .081, .084, .
 data <- data.frame(Age, Year, Rate)
 
 bimodal <- ggplot2::ggplot(data=data, aes(x=Age, y=Rate, color=Year, linetype=Year))+
-  geom_line(size=1.2) +
+  geom_line(linewidth=1.2) +
   scale_x_continuous(breaks=seq(15,39,1))+
   scale_y_continuous(breaks=seq(0.00,0.14,0.02))+
   theme_bw()+
   labs(title="Figure 3. Bimodality in Type I First-Birth Rates, U.S. Women, 1990s")+
   theme(plot.title = element_text(size=10, hjust=0, face="bold"))+
-  theme(legend.position = c(0.3, 0.1))+
+  theme(legend.position = "inside", legend.position.inside = c(0.3, 0.1))+
   guides(colour = guide_legend(nrow = 1))+
   theme(legend.title=element_blank())+
   scale_color_manual(values=c("black", "grey20", "grey80"))+
