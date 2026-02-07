@@ -1,5 +1,5 @@
 # Notes on Paired Samples T-Test
-sleep
+
 # R doesn't have great wide example data sets, so we have to set one up.
 sleep_wide <- sleep |>
   dplyr::mutate(
