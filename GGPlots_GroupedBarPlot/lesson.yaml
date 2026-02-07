@@ -23,7 +23,7 @@
 - Class: figure
   Output: In this module, we will replicate Figure 1 in Grossmann & Kross, 2014. We'll get close to making it perfect.
   Figure: finalanswer.R
-  FigureType: new
+  FigureType: New
   
 #5
 - Class: text

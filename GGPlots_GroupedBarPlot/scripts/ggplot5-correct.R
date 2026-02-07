@@ -1,6 +1,6 @@
 # I took the liberty of adding in the rest of the themes.
 # Just look to see if you can notice any differences.
-# There's nothign to add here, just type submit() !
+# There's nothing to add here, just type submit() !
 plot <- 
   p_sum |>
   ggplot(aes(x=Target, y=mean, fill=Perspective)) +

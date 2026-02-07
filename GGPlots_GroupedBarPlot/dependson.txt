@@ -1,6 +1,5 @@
 ggplot2
 swirl
 dplyr
-swirlify
 scales
 egg
