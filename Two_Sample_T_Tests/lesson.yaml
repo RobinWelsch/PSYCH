@@ -13,7 +13,7 @@
   Script: Notes.R
   
 - Class: text
-  Output: In the last module, we talked about one sample t-test. This is when a sample's mean against a population's mean.
+  Output: In the last module, we talked about one sample t-test. This is when we test a sample's mean against a population's mean.
 
 - Class: text
   Output: However, we want to test whether there are differences between groups.
@@ -24,7 +24,7 @@
 - Class: figure
   Output: This is the equation for the independent samples t-test.
   Figure: isttest.R
-  FigureType: new
+  FigureType: New
 
 - Class: text
   Output: "We calculate this by taking the mean of group 1 (X1) and subtracting off the mean of group 2 (X2) and dividing that by the pooled standard error."
@@ -32,7 +32,7 @@
 - Class: figure
   Output: "The pooled variance, or standard deviation squared, takes the degrees of freedom of each group and multiplies that by the variance. This permits a weighted variance average, where we will favor the group with higher sample sizes (if sample sizes are uneven)."
   Figure: pooledvariance.R
-  FigureType: new
+  FigureType: New
 
 - Class: text
   Output: The assumptions of the independent samples t-test are as follows-
@@ -96,7 +96,7 @@
   Hint: Type sum_intellect. 
   
 - Class: text
-  Output: And finally, we can also get that effect size they report (95% CI of the difference = [0.85, 3.13], d = 1.16].)
+  Output: And finally, we can also get that effect size they report (95% CI of the difference = [0.85, 3.13], d = 1.16).
 
 - Class: cmd_question
   Output: To get their effect size, we need to use a new function, and we will pipe (|>) our data (df) into it.  In the lsr library, there is a function called cohensD(). It takes at least two inputs- the formula (Intellect_Rating ~ Condition) and the data (for us, because we are piping, remember data=_). Let's try just those two inputs now.
@@ -116,7 +116,7 @@
 - Class: figure
   Output: It comes down to these two formulas to calculate effect size. The one on the left is method="pooled", while the one on the right is method="raw". The left one uses our pooled standard deviation equation we are used to, while the one on the right does not (notice the only difference is subtracting two from the denominator of the square root. While the left is an unbiased estimator of the population variance, it is not necessarily true that taking the square root of an unbiased estimator will necessarily lead to an unbiased estimator of the standard deviation. It is also worth acknowledging that the differences reported are relatively minor and decrease in size of the differences as N increases. Still, we will choose the most conservative method (i.e., provides the smallest effect size), which is always method="pooled" or not setting method equal to anything.
   Figure: cohensdiff.R
-  FigureType: new
+  FigureType: New
 
 - Class: cmd_question
   Output: Scroll back through your commands using the up arrow, and let's re-enter the t.test() formula. As a reminder, or if you can't find it, take our data, df, and pipe it (|>) into the t.test() function. Pass that function three arguments, Intellect_Rating~Condition, data=_, and var.equal=TRUE .
@@ -161,7 +161,7 @@
   Output: They write, "The purpose of this study was to compare the descriptive qualities of frozen goals to active goals. To analyze how frozen goals differed from active goals, we used a series of independent sample t-tests to compare characteristics. "
   
 - Class: text
-  Output: "The citation for this paper is Davydenko, M., Werner, K. M., & Milyavskaya, M. (2019). Frozen Goals- Identifying and Defining a New Type of Goal. Collabra: Psychology, 5(1), 17. doi.org/10.1525/collabra.194."
+  Output: "The citation for this paper is Davydenko, M., Werner, K. M., & Milyavskaya, M. (2019). Frozen Goals: Identifying and Defining a New Type of Goal. Collabra: Psychology, 5(1), 17. doi.org/10.1525/collabra.194."
 
 - Class: cmd_question
   Output: The data is loaded in your environment as goalsdf. Our first step when given data is to do what? Examine what it looks like via summary(), head(), tail(), or View(). Exactly. Do one of those now, remembering to pipe |> your dataframe into one of the functions.
