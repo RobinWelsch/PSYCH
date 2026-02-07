@@ -54,7 +54,7 @@ bimodal <- ggplot2::ggplot(data=data, aes(x=Age, y=Rate, color=Year, linetype=Ye
   theme(legend.title=element_blank())+
   scale_color_manual(values=c("black", "grey20", "grey80"))+
   theme(panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), panel.grid.minor.y = element_blank())+
-  theme(legend.background = element_rect(color="black", size=.2))
+  theme(legend.background = element_rect(color="black", linewidth=.2))
   
 rm(Age, Year, RandomError, Rate, data)
 
