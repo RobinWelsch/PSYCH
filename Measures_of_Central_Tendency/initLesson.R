@@ -48,7 +48,7 @@ bimodal <- ggplot2::ggplot(data=data, aes(x=Age, y=Rate, color=Year, linetype=Ye
   scale_y_continuous(breaks=seq(0.00,0.14,0.02))+
   theme_bw()+
   labs(title="Figure 3. Bimodality in Type I First-Birth Rates, U.S. Women, 1990s")+
-  theme(plot.title = element_text(size=10, hjust=FALSE, face="bold"))+
+  theme(plot.title = element_text(size=10, hjust=0, face="bold"))+
   theme(legend.position = c(0.3, 0.1))+
   guides(colour = guide_legend(nrow = 1))+
   theme(legend.title=element_blank())+
