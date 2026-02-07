@@ -1,6 +1,5 @@
 MASS
 swirl
-swirlify
 dplyr
 lsr
 effsize

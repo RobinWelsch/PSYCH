@@ -21,14 +21,14 @@
   Output: "There are two main assumptions for a one-sample t-test. \n\n (1) The data is randomly sampled from the population. \n\n (2) The variable is normally distributed in the population."
 
 - Class: text
-  Output: In psychology, we generally utilize a one-sample t-test to compare against a scale midpoint to show more agreement with some hypothesized value, e.g. how much you like a digital service (1 to 7; Bad = 1; 7 = good; midpoint at 4 = neutral)."
+  Output: "In psychology, we generally utilize a one-sample t-test to compare against a scale midpoint to show more agreement with some hypothesized value, e.g. how much you like a digital service (1 to 7; Bad = 1; 7 = good; midpoint at 4 = neutral)."
 
 
 - Class: text
   Output: In one study, researchers wanted to test how people thought about their purchases and how they define them.
 
 - Class: text
-  Output: "The citation for this study is - Chen, E. Y., Chee, M. X., & Feldman, G. (2023). Revisiting the Differential Centrality of Experiential and Material Purchases to the Self- Replication and Extension of Carter and Gilovich (2012). Collabra: Psychology, 9(1), 57785. doi.org/10.1525/collabra.57785"
+  Output: "The citation for this study is - Chen, E. Y., Chee, M. X., & Feldman, G. (2023). Revisiting the Differential Centrality of Experiential and Material Purchases to the Self: Replication and Extension of Carter and Gilovich (2012). Collabra: Psychology, 9(1), 57785. doi.org/10.1525/collabra.57785"
   
 - Class: text
   Output: "The prompt to the participants read - Please imagine two people, one of whom knew all about your material purchases (Person M), and the other knew all about your experiential purchases (Person E), but neither knew anything else about you. \n\n Which person would better know the real you, your true, essential self? (1 = Definitely Person M (material), 5 = Both equally, 9 = Definitely Person E (experiential))."
@@ -77,7 +77,7 @@
   Output: The high-risk group was a "group of community participants who lived in relatively challenging conditions for Dutch standards, in that people were more likely to need governmental support to meet their basic needs (e.g., food, housing, safety)." They had "anticipated that on average members of the community sample had experienced higher levels of adversity, including higher levels of exposure to violence in their past or current environments. The other group was a college student sample, who [were] expected to have experienced lower levels of violence (the ‘low-risk group’)". We've loaded their data in your environment under violence.
 
 - Class: text
-  Output: "The citation for this paper is- Frankenhuis, W. E., Weijman, E. L., de Vries, S. A., van Zanten, M., & Borghuis, J. (2022). Exposure to Violence Is Not Associated With Accuracy in Forecasting Conflict Outcomes. Collabra- Psychology, 8(1), 38604. doi.org/10.1525/collabra.38604"
+  Output: "The citation for this paper is - Frankenhuis, W. E., Weijman, E. L., de Vries, S. A., van Zanten, M., & Borghuis, J. (2022). Exposure to Violence Is Not Associated With Accuracy in Forecasting Conflict Outcomes. Collabra- Psychology, 8(1), 38604. doi.org/10.1525/collabra.38604"
 
 - Class: text
   Output: Participants watched 16 videos of real-life conflicts and were asked to judge whether each would lead to a physical fight. The researchers (but not the participants) knew that half of those conflicts ended in fights, while half did not. One of their measures in this dataset is C. 
@@ -101,7 +101,7 @@
 - Class: figure
   Output: For example, we could plot the distribution of our variable, C, on a histogram. The line that is shown is the median. There is a positive skew in our variable. We include more information about this in the Notes.
   Figure: Figure1.R
-  FigureType: new
+  FigureType: New
 
 - Class: text
   Output: However, the Shapiro-Wilk test is one of the most well-known and used tests for non-normality. It is very limited - small sample sizes cause it to have not enough power to detect non-normality. Still, too large sample sizes will also be rejected for non-normality. 
