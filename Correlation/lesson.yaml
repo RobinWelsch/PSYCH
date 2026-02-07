@@ -19,7 +19,7 @@
   Output: "Before we compute the correlation matrix, let's remind ourselves of the assumptions for a Pearson's correlation: \n\n 1. Linearity: The relationship between the two variables should be linear. \n\n 2. Bivariate Normality: The two variables should be normally distributed.\n\n 3. Homoscedasticity: The variability in one variable should be the same at all levels of the other variable.\n\n 4. Independence: The pairs of variables should be independent of each other."
 
 - Class: text
-  Output: If these assumptions are violated, using Spearman's correlation might be more appropriate. Spearman's correlation does not require a linear relationship and is more robust against outliers. It measures the monotonic relationship between two variables, meaning it assesses how well the relationship between two variables can be described using a monotonic function, e.g., wether the ranks of two variables correspond.
+  Output: If these assumptions are violated, using Spearman's correlation might be more appropriate. Spearman's correlation does not require a linear relationship and is more robust against outliers. It measures the monotonic relationship between two variables, meaning it assesses how well the relationship between two variables can be described using a monotonic function, e.g., whether the ranks of two variables correspond.
 
 - Class: text
   Output: You generally see correlation matrices as the first table in a results section. It is good to report to assist in meta-analyses. 
@@ -98,7 +98,7 @@
 
 - Class: mult_question
   Output: Adjusting for multiple tests, what is the p-value for the correlation between TOT and age?
-  AnswerChoices: .14;.00;.05;.97;.01;.05
+  AnswerChoices: .14;.00;.05;.97;.01
   CorrectAnswer: .14
   AnswerTests: omnitest(correctVal='.14')
   Hint: Look at the top half of the correlation matrix for p values.

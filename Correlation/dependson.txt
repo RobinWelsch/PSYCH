@@ -1,5 +1,4 @@
 swirl
-swirlify
 dplyr
 psych
 rstatix
