@@ -18,7 +18,7 @@ differential_graph <- ggplot(data_diff, aes(x=beach_goer, y=mean, group=lactose_
   geom_bar(stat="identity", position="dodge", colour="black", aes(fill=lactose_intolerance))+
   scale_fill_manual(values=c("grey40", "grey"))+
   labs(y="How Many Shark Attacks Reported", x="Do You Go to the Beach Frequently", fill="")+
-  theme(legend.position = c(0.65, 0.8))+
+  theme(legend.position = "inside", legend.position.inside = c(0.65, 0.8))+
   theme(plot.title = element_text(hjust = 0.5)) + 
   geom_errorbar(aes(ymin=mean-seminus, ymax=mean+seplus),
                 width=.3,                    # Width of the error bars

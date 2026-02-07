@@ -37,7 +37,7 @@
 
 #5
 - Class: text
-  Output: "On the top right, click the arrow next to the word data. If you don't see this, click the Environment tab first. It should expand on the right side and list out six names."
+  Output: "On the top right, click the arrow next to the word data. If you don't see this, click the Environment tab first. It should expand on the right side and list out five names."
   
 #6
 - Class: mult_question
@@ -49,7 +49,7 @@
 
 #7
 - Class: text
-  Output: "These are our variables! This dataset has six variables. You might even have noticed there are 150 observations within this dataset. You can tell this because next to data, there is a second column that says 150 obs. of 6 variables."
+  Output: "These are our variables! This dataset has five variables. You might even have noticed there are 150 observations within this dataset. You can tell this because next to data, there is a second column that says 150 obs. of 5 variables."
 
 #8
 - Class: cmd_question

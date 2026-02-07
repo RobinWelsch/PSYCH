@@ -8,7 +8,7 @@
  
 #1
 - Class: text
-  Output: Two key terms we will discuss is random sampling and random assignment.
+  Output: Two key terms we will discuss are random sampling and random assignment.
 
 - Class: text
   Output: Random sampling is selection from the population - we try our best to get a representative and random sample so that we can truly generalize our results to the population.
@@ -21,7 +21,7 @@
   Hint: It ensures that our results are generalizable. When we take care about generalizability outside of our test case, we are focusing on which type of validity?
 
 - Class: text
-  Output: Random assignment is talking specifically about conditions. If we have a drug and a placebo pill, we would want to make sure that participants are randomly assigned to either drug or placeabo - that we aren't consciously or unconsciously putting all men into drug and all women into placeabo.
+  Output: Random assignment is talking specifically about conditions. If we have a drug and a placebo pill, we would want to make sure that participants are randomly assigned to either drug or placebo - that we aren't consciously or unconsciously putting all men into drug and all women into placebo.
 
 - Class: mult_question
   Output: Random assignment would be an asset to

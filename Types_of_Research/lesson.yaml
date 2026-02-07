@@ -57,7 +57,7 @@
 - Class: figure
   Output: Let's load in some data. I've loaded in a few scatterplots in your environment.
   Figure: fathersheight.R
-  FigureType: new
+  FigureType: New
 
 #7
 - Class: cmd_question
@@ -135,7 +135,7 @@
 
 - Class: mult_question
   Output: Looking at the graph, do you see large differences between lactose intolerant people and non-lactose intolerant people?
-  AnswerChoices: Yes;No;Im not sure
+  AnswerChoices: Yes;No;I'm not sure
   CorrectAnswer: No
   AnswerTests: omnitest(correctVal="No")
   Hint: We're trying to compare the bars by their color. Does the darker grey look much different than the lighter grey?
@@ -145,7 +145,7 @@
 
 - Class: mult_question
   Output: Looking at the graph, do you see large differences between beach goers  and non-beach-goers?
-  AnswerChoices: Yes;No;Im not sure
+  AnswerChoices: Yes;No;I'm not sure
   CorrectAnswer: Yes
   AnswerTests: omnitest(correctVal="Yes")
   Hint: Now we're looking at the two groups of bars. Is one group of bars significantly taller than the other?

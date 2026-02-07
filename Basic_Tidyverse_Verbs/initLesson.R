@@ -1,4 +1,4 @@
-#Two Sample T Tests
+#Basic Tidyverse Verbs
 
 swirl_options(swirl_logging = FALSE)
 

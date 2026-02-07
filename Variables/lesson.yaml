@@ -166,7 +166,7 @@
   
 #34
 - Class: text
-  Output: "Great! So we see that this variable, 'cut', has 5 levels, or ranks. There's fair (like small), good, very good, premium, and ideal.- those levels are not equidistant meaning that the difference between premium and ideal does not have to be the same as the difference between good and very good."
+  Output: "Great! So we see that this variable, 'cut', has 5 levels, or ranks. There's fair (like small), good, very good, premium, and ideal. Those levels are not equidistant meaning that the difference between premium and ideal does not have to be the same as the difference between good and very good."
   
 #35 - Interval
 - Class: text
@@ -178,7 +178,7 @@
 
 #37
 - Class: text
-  Output: "Interval variables are things we can add and subtract. But! We can't multiply it."
+  Output: "Interval variables are things we can add and subtract. But! We can't multiply them."
 
 #38
 - Class: text
@@ -209,7 +209,7 @@
   
 #44
 - Class: cmd_question
-  Output: "To see an example of an ratio variable, type psych::describeBy(data$price)."
+  Output: "To see an example of a ratio variable, type psych::describeBy(data$price)."
   CorrectAnswer: psych::describeBy(data$price)
   AnswerTests: omnitest(correctExpr='psych::describeBy(data$price)')
   Hint: Type 'psych::describeBy(data$price)' without quotes.

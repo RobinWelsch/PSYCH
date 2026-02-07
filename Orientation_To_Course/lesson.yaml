@@ -25,12 +25,12 @@
 - Class: figure
   Output: We recommend that as soon as the Notes pop up, you click the top left corner of RStudio, where there is this icon (shown in the plot window).
   Figure: figure1.R
-  FigureType: new
+  FigureType: New
   
 - Class: figure
   Output: From there, choose the dropdown option that says R Script (it looks like this icon). 
   Figure: figure2.R
-  FigureType: new
+  FigureType: New
   
 - Class: text
   Output: We recommend you copy and paste the notes for the Module into this separate Script and save it as something memorable in a place you can find it. 
