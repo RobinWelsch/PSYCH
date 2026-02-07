@@ -34,7 +34,7 @@
   Hint: "Don't forget to capitalize View()."
 
 - Class: text
-  Output: Great. So we see that there was 4 variables. The first is the participant number, the second reaction time for Congruent words, the third reaction time for Incongruent words, and the last is the year the data was recorded.
+  Output: Great. So we see that there were 4 variables. The first is the participant number, the second reaction time for Congruent words, the third reaction time for Incongruent words, and the last is the year the data was recorded.
   
 - Class: cmd_question
   Output: "So, let's look at the descriptive statistics for this dataset. We're going to tell R we want to use the psych package, call the describeBy() function, and pass it one argument, data. Do that now."
@@ -59,7 +59,7 @@
   Output: "We can expand this a little bit. Press the up arrow to get back psych::describeBy(data), and add a second argument, group=data$Year."
   CorrectAnswer: psych::describeBy(data, group=data$Year)
   AnswerTests: omnitest(correctExpr='psych::describeBy(data, group=data$Year)')
-  Hint: Try psych::describeBy(data, group=data$Year) . You might have forgotten the comma that separates out arugments.
+  Hint: Try psych::describeBy(data, group=data$Year) . You might have forgotten the comma that separates out arguments.
 
 - Class: cmd_question
   Output: "What is the range for Incongruent for year 2013 in this data?"
@@ -71,7 +71,7 @@
   Output: "One problem we're seeing (potentially) is there's a pretty wide range of reaction times in the data. The range of reaction times for is between 6.64 and 31.67."
   
 - Class: text
-  Output: "Range by itself cannot tell if there are outliers or not. Imagine our Congruent data is actually 8 reaction times under 10 seconds and 10 reaction times over 20 seconds, but 113 reaction times between 10 and 20 seconds. Range doesn't tell use what's going on."
+  Output: "Range by itself cannot tell if there are outliers or not. Imagine our Congruent data is actually 8 reaction times under 10 seconds and 10 reaction times over 20 seconds, but 113 reaction times between 10 and 20 seconds. Range doesn't tell us what's going on."
 
 - Class: text
   Output: We have similar issues when it comes to the Interquartile Range. 
@@ -117,7 +117,7 @@
   Hint: plot.equation(variancepop) 
 
 - Class: text
-  Output: "This formula can be read as The summation (that's the big E) of all X values minus the population mean squared. We divide that big number by N, or the number of people in the population."
+  Output: "This formula can be read as The summation (that's the big sigma symbol) of all X values minus the population mean squared. We divide that big number by N, or the number of people in the population."
 
 - Class: cmd_question
   Output: "Let's look at a very similar, but slightly different formula. Type plot.equation(variancesamp)."
@@ -224,7 +224,7 @@
   AnswerChoices: Comparing High SD Female to High SD Male;Comparing High SD Female to Low SD Female;Comparing High SD Male to Low SD Male;Comparing Low SD Female to Low SD Male
   CorrectAnswer: Comparing Low SD Female to Low SD Male
   AnswerTests: omnitest(correctVal='Comparing Low SD Female to Low SD Male')
-  Hint: Remember that within genders, the scores are still the same (average being a 8 for female and a 4 four males). 
+  Hint: Remember that within genders, the scores are still the same (average being an 8 for females and a 4 for males). 
 
 #50
 - Class: text
