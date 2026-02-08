@@ -22,7 +22,7 @@
   Output: "A threat to internal validity would then be something that makes the groups we create different beyond our own manipulations."
 #
 - Class: text
-  Output: "A threat to external validity would be something that makes our sample somehow different then the target population we wish to generalize outwards to."
+  Output: "A threat to external validity would be something that makes our sample somehow different than the target population we wish to generalize outwards to."
 
 
 #5
@@ -42,18 +42,18 @@
 
 #8
 - Class: cmd_question
-  Output: "One way we can split this world up is to to take a few of the blue eyed people, a few of the green eyed people, and give them either a drug or not. Type plot2 to see how this would look."
+  Output: "One way we can split this world up is to take a few of the blue eyed people, a few of the green eyed people, and give them either a drug or not. Type plot2 to see how this would look."
   CorrectAnswer: plot2
   AnswerTests: omnitest(correctExpr='plot2')
   Hint: Type 'plot2' without quotes. 
 
 #9
 - Class: mult_question
-  Output: "Is doing something like this interally valid, externally valid, both, or neither?"
+  Output: "Is doing something like this internally valid, externally valid, both, or neither?"
   AnswerChoices: Internally valid;Externally valid;Both internally valid and externally valid;Neither internally valid nor externally valid 
   CorrectAnswer: Internally valid
   AnswerTests: omnitest(correctVal="Internally valid")
-  Hint: Interval validity means we have controlled for everything we can. Externally valid means we can generalize out to the greater population. 
+  Hint: Internal validity means we have controlled for everything we can. Externally valid means we can generalize out to the greater population. 
 
 #10
 - Class: text
@@ -68,11 +68,11 @@
 
 #12
 - Class: mult_question
-  Output: "Is doing something like this interally valid, externally valid, both, or neither?"
+  Output: "Is doing something like this internally valid, externally valid, both, or neither?"
   AnswerChoices: Externally valid;Internally valid;Both internally valid and externally valid;Neither internally valid nor externally valid 
   CorrectAnswer: Externally valid
   AnswerTests: omnitest(correctVal="Externally valid")
-  Hint: Interval validity means we have controlled for everything we can. Externally valid means we can generalize out to the greater population. 
+  Hint: Internal validity means we have controlled for everything we can. Externally valid means we can generalize out to the greater population. 
 
 #13
 - Class: text
@@ -87,11 +87,11 @@
 
 #15
 - Class: mult_question
-  Output: "Is doing something like this interally valid, externally valid, both, or neither?"
+  Output: "Is doing something like this internally valid, externally valid, both, or neither?"
   AnswerChoices: Externally valid;Internally valid;Both internally valid and externally valid;Neither internally valid nor externally valid 
   CorrectAnswer: Both internally valid and externally valid
   AnswerTests: omnitest(correctVal="Both internally valid and externally valid")
-  Hint: Interval validity means we have controlled for everything we can. Externally valid means we can generalize out to the greater population. 
+  Hint: Internal validity means we have controlled for everything we can. Externally valid means we can generalize out to the greater population. 
   
 #16
 - Class: text
