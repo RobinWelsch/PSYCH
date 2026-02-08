@@ -3,5 +3,6 @@ dplyr
 rstatix 
 ggplot2
 latex2exp
+lsr
 caTools
 base64enc
