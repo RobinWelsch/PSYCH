@@ -32,7 +32,7 @@
   Output: However, the F Test is very sensitive to outliers and non-normality, so we consider it only as a first check.
   
 - Class: text
-  Output: Instead, we will use 'the best' test of testing non-normality, Levene's Test. However, it should be noted that Levene's Test also has its problems - it has very low power with low sample sizes and struggles when sample sizes are very uneven (c.f. Nordstrokke & Zumbo, 2007).
+  Output: Instead, we will use 'the best' test of testing equal variances, Levene's Test. However, it should be noted that Levene's Test also has its problems - it has very low power with low sample sizes and struggles when sample sizes are very uneven (c.f. Nordstrokke & Zumbo, 2007).
   
 - Class: text
   Output: The full prior citation is - Nordstokke, D. W. & Zumbo, B. D. (2007). A Cautionary Tale about Levene’s Tests for Equal Variances. Journal of Educational Research & Policy Studies, 7(1), 1–14.
