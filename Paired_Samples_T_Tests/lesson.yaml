@@ -87,7 +87,7 @@
   Output: Let's try a second example. 
 
 - Class: text
-  Output: The citation for this study is "Mazar, A., & Wood, W. (2022). Illusory Feelings, Elusive habits: People overlook habits in explanations of behavior. Psychological Science, 33(4), 563–578. doi.org/10.1177/09567976211045345"
+  Output: 'The citation for this study is "Mazar, A., & Wood, W. (2022). Illusory Feelings, Elusive habits: People overlook habits in explanations of behavior. Psychological Science, 33(4), 563-578. doi.org/10.1177/09567976211045345"'
 
 - Class: text
   Output: The psychologists had individuals do a task where they quickly formed a habit of pressing the Z key on their keyboard. After the habit formed, they asked participants if they would be willing to assist for five more minutes for no additional compensation, where Z was coded to be Yes. 
