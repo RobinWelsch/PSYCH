@@ -34,7 +34,7 @@
   Output: Let us look at the first few rows of the first dataset, loaded into your environment as 'activism'. Please type-  activism |> head()
   CorrectAnswer: activism |> head()
   Hint: Use the head function to display the first few rows of the dataset.
-  AnswerTests: omnitest(correctExpr="head(activism)")
+  AnswerTests: omnitest(correctExpr='activism |> head()')
   
 - Class: text
   Output: As you can see, we've already selected only the continuous variables that would go into the correlation matrix. You may have to do this independently (see the Notes). 

@@ -7,7 +7,7 @@
   Version: 4.0.0
 #1
 
-- Class: scriptpsum
+- Class: script
   Output: Here are some notes for this module. When you've saved the notes, type submit().
   AnswerTests: script_results_identical('saved')
   Hint: Make sure the last line in your script says saved <- "Y".
