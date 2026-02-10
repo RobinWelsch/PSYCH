@@ -12,7 +12,7 @@ plot <-
   stat_summary( 
     fun = mean, 
     geom = "point",
-    size = 1
+    size = 3
   ) +
   stat_summary(
     fun = mean,
