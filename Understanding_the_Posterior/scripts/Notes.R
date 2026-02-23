@@ -1,5 +1,9 @@
 # Notes for Understanding the Posterior Module
 
+# We use the see package (part of easystats) for clean, modern ggplot2 themes.
+# theme_modern() provides publication-ready plots with minimal visual clutter.
+library(see)
+
 # Normal-Normal Conjugate Model
 # When we have continuous data with a normal likelihood and a normal prior
 # on the mean, the posterior is also normal. This is called conjugacy.

@@ -17,6 +17,7 @@
 
 library(brms)
 library(dplyr)
+library(see)
 
 # Fit a Bayesian logistic regression:
 # fit_logistic <- brm(retained ~ condition, data = engagement,

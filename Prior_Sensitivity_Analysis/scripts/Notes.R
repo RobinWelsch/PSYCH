@@ -14,6 +14,7 @@
 
 library(dplyr)
 library(BayesFactor)
+library(see)
 
 # Explore the data:
 typing |> head()

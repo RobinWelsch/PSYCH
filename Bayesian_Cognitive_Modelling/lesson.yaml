@@ -34,10 +34,10 @@
 
 #6
 - Class: cmd_question
-  Output: "Let's visualize the relationship between Index of Difficulty and movement time."
-  CorrectAnswer: fitts |> ggplot(aes(x = ID, y = movement_time)) + geom_point(alpha = 0.1) + geom_smooth(method = "lm") + xlab("Index of Difficulty (bits)") + ylab("Movement Time (ms)")
-  AnswerTests: omnitest(correctExpr='fitts |> ggplot(aes(x = ID, y = movement_time)) + geom_point(alpha = 0.1) + geom_smooth(method = "lm") + xlab("Index of Difficulty (bits)") + ylab("Movement Time (ms)")')
-  Hint: Try fitts |> ggplot(aes(x = ID, y = movement_time)) + geom_point(alpha = 0.1) + geom_smooth(method = "lm") + xlab("Index of Difficulty (bits)") + ylab("Movement Time (ms)")
+  Output: "Let's visualize the relationship between Index of Difficulty and movement time. We add theme_modern() from the see package (part of easystats) for a clean look."
+  CorrectAnswer: fitts |> ggplot(aes(x = ID, y = movement_time)) + geom_point(alpha = 0.1) + geom_smooth(method = "lm") + xlab("Index of Difficulty (bits)") + ylab("Movement Time (ms)") + theme_modern()
+  AnswerTests: omnitest(correctExpr='fitts |> ggplot(aes(x = ID, y = movement_time)) + geom_point(alpha = 0.1) + geom_smooth(method = "lm") + xlab("Index of Difficulty (bits)") + ylab("Movement Time (ms)") + theme_modern()')
+  Hint: Try fitts |> ggplot(aes(x = ID, y = movement_time)) + geom_point(alpha = 0.1) + geom_smooth(method = "lm") + xlab("Index of Difficulty (bits)") + ylab("Movement Time (ms)") + theme_modern()
 
 #7
 - Class: text

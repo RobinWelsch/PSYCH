@@ -30,14 +30,18 @@
 
 library(dplyr)
 library(ggplot2)
+library(see)
 library(brms)
 
 # Visualize the relationship:
+# We use theme_modern() from the see package (part of easystats)
+# for clean, publication-ready plots throughout this course.
 # screentime |> ggplot(aes(x = hours, y = wellbeing)) +
 #   geom_point() +
 #   geom_smooth(method = "lm") +
 #   xlab("Daily Screen Time (hours)") +
-#   ylab("Wellbeing (WHO-5)")
+#   ylab("Wellbeing (WHO-5)") +
+#   theme_modern()
 
 # ===== FREQUENTIST vs BAYESIAN REGRESSION =====
 # Frequentist:

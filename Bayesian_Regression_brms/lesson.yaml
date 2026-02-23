@@ -54,10 +54,10 @@
 
 #10
 - Class: cmd_question
-  Output: "Let's visualize the relationship between screen time and wellbeing with a scatterplot and linear trend."
-  CorrectAnswer: screentime |> ggplot(aes(x = hours, y = wellbeing)) + geom_point() + geom_smooth(method = "lm") + xlab("Daily Screen Time (hours)") + ylab("Wellbeing (WHO-5)")
-  AnswerTests: omnitest(correctExpr='screentime |> ggplot(aes(x = hours, y = wellbeing)) + geom_point() + geom_smooth(method = "lm") + xlab("Daily Screen Time (hours)") + ylab("Wellbeing (WHO-5)")')
-  Hint: Try screentime |> ggplot(aes(x = hours, y = wellbeing)) + geom_point() + geom_smooth(method = "lm") + xlab("Daily Screen Time (hours)") + ylab("Wellbeing (WHO-5)")
+  Output: "Let's visualize the relationship between screen time and wellbeing with a scatterplot and linear trend. We add theme_modern() from the see package (part of easystats) for a clean, publication-ready look."
+  CorrectAnswer: screentime |> ggplot(aes(x = hours, y = wellbeing)) + geom_point() + geom_smooth(method = "lm") + xlab("Daily Screen Time (hours)") + ylab("Wellbeing (WHO-5)") + theme_modern()
+  AnswerTests: omnitest(correctExpr='screentime |> ggplot(aes(x = hours, y = wellbeing)) + geom_point() + geom_smooth(method = "lm") + xlab("Daily Screen Time (hours)") + ylab("Wellbeing (WHO-5)") + theme_modern()')
+  Hint: Try screentime |> ggplot(aes(x = hours, y = wellbeing)) + geom_point() + geom_smooth(method = "lm") + xlab("Daily Screen Time (hours)") + ylab("Wellbeing (WHO-5)") + theme_modern()
 
 #11
 - Class: text

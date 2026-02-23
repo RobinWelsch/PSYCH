@@ -29,10 +29,10 @@
 
 #5
 - Class: cmd_question
-  Output: Now let us visualize the distribution of ratings. Create a histogram using ggplot with 20 bins.
-  CorrectAnswer: presence |> ggplot(aes(x = rating)) + geom_histogram(bins = 20) + xlab("Presence Rating") + ylab("Count")
-  AnswerTests: omnitest(correctExpr='presence |> ggplot(aes(x = rating)) + geom_histogram(bins = 20) + xlab("Presence Rating") + ylab("Count")')
-  Hint: presence |> ggplot(aes(x = rating)) + geom_histogram(bins = 20) + xlab("Presence Rating") + ylab("Count")
+  Output: Now let us visualize the distribution of ratings. Create a histogram using ggplot with 20 bins. We use theme_modern() from the see package (part of easystats) for clean, publication-ready plots.
+  CorrectAnswer: presence |> ggplot(aes(x = rating)) + geom_histogram(bins = 20) + xlab("Presence Rating") + ylab("Count") + theme_modern()
+  AnswerTests: omnitest(correctExpr='presence |> ggplot(aes(x = rating)) + geom_histogram(bins = 20) + xlab("Presence Rating") + ylab("Count") + theme_modern()')
+  Hint: presence |> ggplot(aes(x = rating)) + geom_histogram(bins = 20) + xlab("Presence Rating") + ylab("Count") + theme_modern()
 
 #6
 - Class: text

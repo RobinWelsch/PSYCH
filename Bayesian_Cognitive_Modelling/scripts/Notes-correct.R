@@ -16,13 +16,15 @@
 # Visualize the data:
 library(dplyr)
 library(ggplot2)
+library(see)
 library(brms)
 
 fitts |> ggplot(aes(x = ID, y = movement_time)) +
   geom_point(alpha = 0.1) +
   geom_smooth(method = "lm") +
   xlab("Index of Difficulty (bits)") +
-  ylab("Movement Time (ms)")
+  ylab("Movement Time (ms)") +
+  theme_modern()
 
 # ===== HIERARCHICAL FITTS' LAW MODEL WITH brms =====
 # We fit a hierarchical (mixed-effects) model:

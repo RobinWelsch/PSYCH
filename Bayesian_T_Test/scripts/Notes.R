@@ -3,6 +3,7 @@
 # --- Bayesian T-Test with BayesFactor ---
 
 library(BayesFactor)
+library(see)
 
 # ttestBF()
 ## The main function for running a Bayesian independent samples t-test.

@@ -2,6 +2,7 @@
 swirl_options(swirl_logging = FALSE)
 library(dplyr)
 library(ggplot2)
+library(see)
 
 set.seed(2024)
 presence <- data.frame(
