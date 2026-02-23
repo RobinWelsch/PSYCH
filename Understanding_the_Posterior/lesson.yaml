@@ -1,0 +1,149 @@
+- Class: meta
+  Course: PsychMetHCI - Statistical Methods in Human-Computer Interaction
+  Lesson: Understanding_the_Posterior
+  Author: Robin Welsch & Tapio Tuloisela
+  Type: Standard
+  Organization: Aalto University
+  Version: 4.0.0
+#1
+- Class: script
+  Output: Here are some notes for this module. When you've saved the notes, type submit().
+  AnswerTests: script_results_identical('saved')
+  Hint: Make sure the last line in your script reads as saved <- "Y".
+  Script: Notes.R
+
+#2
+- Class: text
+  Output: "Recap: In Module 1 we computed a posterior distribution for a proportion using the Beta-Binomial model. Now we shift our focus to continuous outcomes, where the posterior also takes a convenient closed form when we use conjugate priors."
+
+#3
+- Class: text
+  Output: "Researchers conducted a study examining sense of presence during a virtual reality museum tour. 80 participants explored a VR recreation of an art museum and then rated their sense of presence on a 0-100 scale."
+
+#4
+- Class: cmd_question
+  Output: Let us start by examining the presence data. Pipe the presence data frame into summary() to get a quick overview.
+  CorrectAnswer: presence |> summary()
+  AnswerTests: omnitest(correctExpr='presence |> summary()')
+  Hint: Type presence |> summary()
+
+#5
+- Class: cmd_question
+  Output: Now let us visualize the distribution of ratings. Create a histogram using ggplot with 20 bins.
+  CorrectAnswer: presence |> ggplot(aes(x = rating)) + geom_histogram(bins = 20) + xlab("Presence Rating") + ylab("Count")
+  AnswerTests: omnitest(correctExpr='presence |> ggplot(aes(x = rating)) + geom_histogram(bins = 20) + xlab("Presence Rating") + ylab("Count")')
+  Hint: presence |> ggplot(aes(x = rating)) + geom_histogram(bins = 20) + xlab("Presence Rating") + ylab("Count")
+
+#6
+- Class: text
+  Output: "For continuous data with a normal likelihood and a normal prior on the mean, the posterior for the mean (mu) is also normal. This is known as conjugacy - the prior and posterior belong to the same distributional family. The normal-normal conjugate model is one of the most important building blocks in Bayesian statistics."
+
+#7
+- Class: text
+  Output: "The posterior mean is a precision-weighted average of the prior mean and the sample mean. The formula is: posterior_mean = (prior_mean/prior_var + n*sample_mean/data_var) / (1/prior_var + n/data_var). The posterior variance is: post_var = 1 / (1/prior_var + n/data_var). Precision is the inverse of variance, so terms with smaller variance (higher precision) get more weight."
+
+#8
+- Class: cmd_question
+  Output: Let us compute the ingredients we need. First, calculate the sample mean of the ratings.
+  CorrectAnswer: sample_mean <- mean(presence$rating)
+  AnswerTests: omnitest(correctExpr='sample_mean <- mean(presence$rating)')
+  Hint: sample_mean <- mean(presence$rating)
+
+#9
+- Class: cmd_question
+  Output: Now calculate the sample variance of the ratings.
+  CorrectAnswer: sample_var <- var(presence$rating)
+  AnswerTests: omnitest(correctExpr='sample_var <- var(presence$rating)')
+  Hint: sample_var <- var(presence$rating)
+
+#10
+- Class: cmd_question
+  Output: Store the number of observations.
+  CorrectAnswer: n <- nrow(presence)
+  AnswerTests: omnitest(correctExpr='n <- nrow(presence)')
+  Hint: n <- nrow(presence)
+
+#11
+- Class: cmd_question
+  Output: "Now let us set up a weakly informative prior. We will center our prior at 50 (the midpoint of the scale), reflecting a belief that without data we would expect an average presence rating near the middle. Set prior_mean to 50."
+  CorrectAnswer: prior_mean <- 50
+  AnswerTests: omnitest(correctExpr='prior_mean <- 50')
+  Hint: prior_mean <- 50
+
+#12
+- Class: cmd_question
+  Output: "Set the prior variance to 400 (a standard deviation of 20), which is fairly wide and expresses substantial uncertainty about the true mean before seeing data."
+  CorrectAnswer: prior_var <- 400
+  AnswerTests: omnitest(correctExpr='prior_var <- 400')
+  Hint: prior_var <- 400
+
+#13
+- Class: cmd_question
+  Output: Now compute the posterior variance using the conjugate formula. Remember, posterior precision equals prior precision plus data precision.
+  CorrectAnswer: post_var <- 1 / (1/prior_var + n/sample_var)
+  AnswerTests: omnitest(correctExpr='post_var <- 1 / (1/prior_var + n/sample_var)')
+  Hint: post_var <- 1 / (1/prior_var + n/sample_var)
+
+#14
+- Class: cmd_question
+  Output: Now compute the posterior mean as the precision-weighted combination of the prior mean and the sample mean.
+  CorrectAnswer: post_mean <- post_var * (prior_mean/prior_var + n*sample_mean/sample_var)
+  AnswerTests: omnitest(correctExpr='post_mean <- post_var * (prior_mean/prior_var + n*sample_mean/sample_var)')
+  Hint: post_mean <- post_var * (prior_mean/prior_var + n*sample_mean/sample_var)
+
+#15
+- Class: cmd_question
+  Output: "Excellent! Now let us visualize the prior, likelihood, and posterior on the same plot. The red curve is the prior, green is the likelihood (scaled), and blue is the posterior."
+  CorrectAnswer: curve(dnorm(x, prior_mean, sqrt(prior_var)), from=30, to=90, col="red", ylab="Density", xlab="Mean Presence Rating", main="Prior, Likelihood, and Posterior"); curve(dnorm(x, sample_mean, sqrt(sample_var/n)), add=TRUE, col="green"); curve(dnorm(x, post_mean, sqrt(post_var)), add=TRUE, col="blue", lwd=2)
+  AnswerTests: omnitest(correctExpr='curve(dnorm(x, prior_mean, sqrt(prior_var)), from=30, to=90, col="red", ylab="Density", xlab="Mean Presence Rating", main="Prior, Likelihood, and Posterior"); curve(dnorm(x, sample_mean, sqrt(sample_var/n)), add=TRUE, col="green"); curve(dnorm(x, post_mean, sqrt(post_var)), add=TRUE, col="blue", lwd=2)')
+  Hint: "Copy the full plotting command: curve(dnorm(x, prior_mean, sqrt(prior_var)), from=30, to=90, col=\"red\", ylab=\"Density\", xlab=\"Mean Presence Rating\", main=\"Prior, Likelihood, and Posterior\"); curve(dnorm(x, sample_mean, sqrt(sample_var/n)), add=TRUE, col=\"green\"); curve(dnorm(x, post_mean, sqrt(post_var)), add=TRUE, col=\"blue\", lwd=2)"
+
+#16
+- Class: text
+  Output: "Notice the shrinkage effect - the posterior (blue) is pulled slightly toward the prior (red) compared to the likelihood (green). However, with 80 observations the data strongly dominates, so the posterior is very close to the likelihood. With fewer observations, the prior would have more influence. This is a fundamental feature of Bayesian inference: the posterior is always a compromise between prior and data."
+
+#17
+- Class: mult_question
+  Output: What happens to the posterior as sample size increases?
+  AnswerChoices: It becomes dominated by the data;It stays at the prior;It becomes wider;It becomes uniform
+  CorrectAnswer: It becomes dominated by the data
+  AnswerTests: omnitest(correctVal='It becomes dominated by the data')
+  Hint: Think about what happens to the precision of the data term as n grows.
+
+#18
+- Class: text
+  Output: "Now let us discuss credible intervals. A Bayesian credible interval is fundamentally different from a frequentist confidence interval. A 95% credible interval means there is a 95% probability that the parameter lies within the interval, given the data and prior. This is the direct probability statement that most people incorrectly attribute to confidence intervals."
+
+#19
+- Class: cmd_question
+  Output: Compute the 95% credible interval for the posterior mean using qnorm. This gives us the 2.5th and 97.5th percentiles of the posterior distribution.
+  CorrectAnswer: qnorm(c(0.025, 0.975), mean = post_mean, sd = sqrt(post_var))
+  AnswerTests: omnitest(correctExpr='qnorm(c(0.025, 0.975), mean = post_mean, sd = sqrt(post_var))')
+  Hint: qnorm(c(0.025, 0.975), mean = post_mean, sd = sqrt(post_var))
+
+#20
+- Class: mult_question
+  Output: "A 95% Bayesian credible interval means..."
+  AnswerChoices: There is a 95% probability the parameter lies in this interval;If we repeated the study 100 times 95 intervals would contain the true value;The p-value is less than 0.05;The effect is statistically significant
+  CorrectAnswer: There is a 95% probability the parameter lies in this interval
+  AnswerTests: omnitest(correctVal='There is a 95% probability the parameter lies in this interval')
+  Hint: Remember, Bayesian credible intervals allow direct probability statements about parameters.
+
+#21
+- Class: text
+  Output: "The posterior predictive distribution answers the question: given everything we have learned, what new data might we expect to see? It accounts for two sources of uncertainty - uncertainty about the parameter (posterior uncertainty) and the natural variability in the data (sampling variability). We generate it by first drawing a parameter value from the posterior, then drawing a data point from the likelihood given that parameter."
+
+#22
+- Class: cmd_question
+  Output: "Generate a posterior predictive distribution by first sampling 10000 means from the posterior, then sampling predicted data points from those means. We use set.seed(42) for reproducibility."
+  CorrectAnswer: set.seed(42); pred_mu <- rnorm(10000, post_mean, sqrt(post_var)); pred_data <- rnorm(10000, pred_mu, sqrt(sample_var)); hist(pred_data, breaks=30, main="Posterior Predictive Distribution", xlab="Predicted Rating")
+  AnswerTests: omnitest(correctExpr='set.seed(42); pred_mu <- rnorm(10000, post_mean, sqrt(post_var)); pred_data <- rnorm(10000, pred_mu, sqrt(sample_var)); hist(pred_data, breaks=30, main="Posterior Predictive Distribution", xlab="Predicted Rating")')
+  Hint: "set.seed(42); pred_mu <- rnorm(10000, post_mean, sqrt(post_var)); pred_data <- rnorm(10000, pred_mu, sqrt(sample_var)); hist(pred_data, breaks=30, main=\"Posterior Predictive Distribution\", xlab=\"Predicted Rating\")"
+
+#23
+- Class: mult_question
+  Output: Which of the following is NOT an advantage of Bayesian credible intervals over frequentist confidence intervals?
+  AnswerChoices: They are always narrower;They have a direct probability interpretation;They incorporate prior knowledge;They update naturally with new data
+  CorrectAnswer: They are always narrower
+  AnswerTests: omnitest(correctVal='They are always narrower')
+  Hint: Think about whether Bayesian intervals are guaranteed to be narrower in all situations.

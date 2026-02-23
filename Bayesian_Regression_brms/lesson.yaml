@@ -1,0 +1,145 @@
+- Class: meta
+  Course: PsychMetHCI - Statistical Methods in Human-Computer Interaction
+  Lesson: Bayesian_Regression_brms
+  Author: Robin Welsch & Tapio Tuloisela
+  Type: Standard
+  Organization: Aalto University
+  Version: 4.0.0
+
+#1
+- Class: script
+  Output: To save the notes for this module, copy and paste the code provided into your own RNotebook. Type submit() when you have finished saving these notes.
+  AnswerTests: script_results_identical('saved')
+  Hint: "Don't change anything, just type submit(). If you did and you don't know how to fix it, just type skip(), and you'll be all set."
+  Script: Notes.R
+
+#2
+- Class: text
+  Output: "So far, we've used conjugate models and the BayesFactor package to do Bayesian inference. But real research often needs more flexible models -- multiple predictors, random effects, non-normal outcomes. That's where brms comes in."
+
+#3
+- Class: text
+  Output: "brms (Bayesian Regression Models using Stan) lets you fit virtually any regression model in a Bayesian framework. It uses familiar R formula syntax (just like lm() or glm()) but estimates the posterior distribution instead of point estimates."
+
+#4
+- Class: text
+  Output: "Why do we need special software? For simple models like the Beta-Binomial, we could compute the posterior analytically using conjugate updating. For most real regression models with multiple parameters, there is no closed-form solution. We need numerical methods to approximate the posterior."
+
+#5
+- Class: text
+  Output: "This is where Markov Chain Monte Carlo (MCMC) comes in. Imagine exploring a mountain range in dense fog. You cannot see the whole landscape, but you can feel the slope under your feet. MCMC algorithms take a series of steps through the parameter space, spending more time in regions of high posterior probability. Over many steps, the collection of visited points approximates the posterior distribution."
+
+#6
+- Class: text
+  Output: "Hamiltonian Monte Carlo (HMC) is the specific MCMC algorithm used by Stan (and therefore brms). Unlike basic Metropolis-Hastings, which proposes random steps, HMC uses the gradient (slope) of the posterior -- like rolling a ball on the surface of the posterior landscape. This lets it make large, efficient moves through parameter space while maintaining a high acceptance rate, especially in high-dimensional models."
+
+#7
+- Class: mult_question
+  Output: "Why is HMC preferred over basic Metropolis-Hastings for complex models?"
+  AnswerChoices: It uses gradient information to explore the posterior more efficiently;It does not require priors;It is faster to compile;It guarantees finding the global maximum
+  CorrectAnswer: It uses gradient information to explore the posterior more efficiently
+  AnswerTests: omnitest(correctVal='It uses gradient information to explore the posterior more efficiently')
+  Hint: Think about what makes HMC special compared to random-walk proposals.
+
+#8
+- Class: text
+  Output: "Digital health researchers examined the relationship between daily smartphone screen time and mental wellbeing. 150 participants reported their average daily screen time in hours and completed the WHO-5 wellbeing questionnaire (scored 0-100). The researchers also recorded each participant's age as a potential covariate."
+
+#9
+- Class: cmd_question
+  Output: "Let's look at the data. Type screentime |> head() to see the first few rows."
+  CorrectAnswer: screentime |> head()
+  AnswerTests: omnitest(correctExpr='screentime |> head()')
+  Hint: Try screentime |> head()
+
+#10
+- Class: cmd_question
+  Output: "Let's visualize the relationship between screen time and wellbeing with a scatterplot and linear trend."
+  CorrectAnswer: screentime |> ggplot(aes(x = hours, y = wellbeing)) + geom_point() + geom_smooth(method = "lm") + xlab("Daily Screen Time (hours)") + ylab("Wellbeing (WHO-5)")
+  AnswerTests: omnitest(correctExpr='screentime |> ggplot(aes(x = hours, y = wellbeing)) + geom_point() + geom_smooth(method = "lm") + xlab("Daily Screen Time (hours)") + ylab("Wellbeing (WHO-5)")')
+  Hint: Try screentime |> ggplot(aes(x = hours, y = wellbeing)) + geom_point() + geom_smooth(method = "lm") + xlab("Daily Screen Time (hours)") + ylab("Wellbeing (WHO-5)")
+
+#11
+- Class: text
+  Output: "There appears to be a negative relationship between screen time and wellbeing. Let's first fit the frequentist version for comparison, and then fit the same model using brms."
+
+#12
+- Class: cmd_question
+  Output: "Fit a frequentist linear model predicting wellbeing from screen time hours and view the summary."
+  CorrectAnswer: lm(wellbeing ~ hours, data = screentime) |> summary()
+  AnswerTests: omnitest(correctExpr='lm(wellbeing ~ hours, data = screentime) |> summary()')
+  Hint: Try lm(wellbeing ~ hours, data = screentime) |> summary()
+
+#13
+- Class: text
+  Output: "Now let's fit the Bayesian version with brms. The syntax mirrors lm() almost exactly -- you specify the formula and data the same way. brms translates your model into Stan code, compiles it, and runs HMC sampling to approximate the posterior distribution."
+
+#14
+- Class: cmd_question
+  Output: "Fit a Bayesian linear model predicting wellbeing from hours using brm(). We add seed = 42 for reproducibility and silent = 2, refresh = 0 to suppress verbose output. This may take a moment to compile."
+  CorrectAnswer: fit1 <- brm(wellbeing ~ hours, data = screentime, seed = 42, silent = 2, refresh = 0)
+  AnswerTests: omnitest(correctExpr='fit1 <- brm(wellbeing ~ hours, data = screentime, seed = 42, silent = 2, refresh = 0)')
+  Hint: Try fit1 <- brm(wellbeing ~ hours, data = screentime, seed = 42, silent = 2, refresh = 0)
+
+#15
+- Class: cmd_question
+  Output: "Now let's look at the model summary."
+  CorrectAnswer: summary(fit1)
+  AnswerTests: omnitest(correctExpr='summary(fit1)')
+  Hint: Try summary(fit1)
+
+#16
+- Class: text
+  Output: "Let's break down the brms output. The 'Estimate' column gives the posterior mean for each parameter -- similar to the frequentist coefficient. 'Est.Error' is the posterior standard deviation. 'l-95% CI' and 'u-95% CI' form the 95% credible interval -- there is a 95% probability the true parameter lies in this range (unlike a frequentist confidence interval!). 'Rhat' should be approximately 1.00, indicating the MCMC chains have converged. 'Bulk_ESS' and 'Tail_ESS' report the effective sample size -- these should be at least 400 for reliable estimates."
+
+#17
+- Class: mult_question
+  Output: "What does Rhat approximately equal to 1.00 indicate in brms output?"
+  AnswerChoices: The MCMC chains have converged;The model is statistically significant;The prior is correct;The residuals are normal
+  CorrectAnswer: The MCMC chains have converged
+  AnswerTests: omnitest(correctVal='The MCMC chains have converged')
+  Hint: Rhat is a convergence diagnostic that compares between-chain and within-chain variance.
+
+#18
+- Class: cmd_question
+  Output: "Let's visualize the posterior distributions and trace plots for our model parameters."
+  CorrectAnswer: plot(fit1)
+  AnswerTests: omnitest(correctExpr='plot(fit1)')
+  Hint: Try plot(fit1)
+
+#19
+- Class: text
+  Output: "The left panels show the posterior density for each parameter. The right panels show the trace plots -- the path each MCMC chain took through parameter space. Good trace plots look like 'hairy caterpillars' -- the chains should overlap and mix well, with no trends, drifts, or stuck regions. If the chains look like distinct ribbons or show long-term trends, that signals a convergence problem."
+
+#20
+- Class: cmd_question
+  Output: "Now let's add age as a covariate. Fit a Bayesian model predicting wellbeing from hours and age."
+  CorrectAnswer: fit2 <- brm(wellbeing ~ hours + age, data = screentime, seed = 42, silent = 2, refresh = 0)
+  AnswerTests: omnitest(correctExpr='fit2 <- brm(wellbeing ~ hours + age, data = screentime, seed = 42, silent = 2, refresh = 0)')
+  Hint: Try fit2 <- brm(wellbeing ~ hours + age, data = screentime, seed = 42, silent = 2, refresh = 0)
+
+#21
+- Class: cmd_question
+  Output: "View the summary of the model with both predictors."
+  CorrectAnswer: summary(fit2)
+  AnswerTests: omnitest(correctExpr='summary(fit2)')
+  Hint: Try summary(fit2)
+
+#22
+- Class: text
+  Output: "brms uses default weakly informative priors so your model works out of the box. But you can and often should set your own priors based on domain knowledge. The function get_prior() shows you what priors brms will use for a given model formula, and set_prior() lets you customize them."
+
+#23
+- Class: cmd_question
+  Output: "Let's see what default priors brms would use for our model with hours and age."
+  CorrectAnswer: get_prior(wellbeing ~ hours + age, data = screentime)
+  AnswerTests: omnitest(correctExpr='get_prior(wellbeing ~ hours + age, data = screentime)')
+  Hint: Try get_prior(wellbeing ~ hours + age, data = screentime)
+
+#24
+- Class: mult_question
+  Output: "In brms, what does Bulk_ESS represent?"
+  AnswerChoices: The effective number of independent posterior samples;The total number of iterations;The sample size of the data;The number of predictors
+  CorrectAnswer: The effective number of independent posterior samples
+  AnswerTests: omnitest(correctVal='The effective number of independent posterior samples')
+  Hint: ESS stands for Effective Sample Size and accounts for autocorrelation in the MCMC chains.

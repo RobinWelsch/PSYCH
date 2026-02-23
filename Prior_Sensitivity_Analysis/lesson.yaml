@@ -1,0 +1,133 @@
+- Class: meta
+  Course: PsychMetHCI - Statistical Methods in Human-Computer Interaction
+  Lesson: Prior_Sensitivity_Analysis
+  Author: Robin Welsch & Tapio Tuloisela
+  Type: Standard
+  Organization: Aalto University
+  Version: 4.0.0
+
+#1
+- Class: script
+  Output: "To save the notes for this module, copy and paste the code provided into your own RNotebook. Type submit() when you have finished saving these notes."
+  AnswerTests: script_results_identical('saved')
+  Hint: "Don't change anything, just type submit(). If you did and you don't know how to fix it, just type skip(), and you'll be all set."
+  Script: Notes.R
+
+#2
+- Class: text
+  Output: "In Bayesian analysis, we choose a prior distribution that represents our beliefs before seeing data. A natural and important question is: does our conclusion change if we choose a different prior? Investigating this is called prior sensitivity analysis."
+
+#3
+- Class: text
+  Output: "Input method researchers wanted to compare two smartphone typing techniques: swipe-typing (sliding finger across keyboard) versus traditional tap-typing. 90 participants were randomly assigned to one method and typed a standard passage while words per minute (WPM) was recorded."
+
+#4
+- Class: cmd_question
+  Output: "Let's look at the data. Type typing |> head() to see the first few rows."
+  CorrectAnswer: typing |> head()
+  AnswerTests: omnitest(correctExpr='typing |> head()')
+  Hint: Try typing |> head()
+
+#5
+- Class: cmd_question
+  Output: "Now let's get the mean and standard deviation of WPM for each typing method. Pipe typing into group_by(method) and then summarise(M = mean(wpm), SD = sd(wpm))."
+  CorrectAnswer: typing |> group_by(method) |> summarise(M = mean(wpm), SD = sd(wpm))
+  AnswerTests: omnitest(correctExpr='typing |> group_by(method) |> summarise(M = mean(wpm), SD = sd(wpm))')
+  Hint: Try typing |> group_by(method) |> summarise(M = mean(wpm), SD = sd(wpm))
+
+#6
+- Class: text
+  Output: "Let's run the Bayesian t-test with different prior scales and see how the Bayes Factor changes. The BayesFactor package provides three default prior scales for the Cauchy prior on effect size: medium (r = sqrt(2)/2 ~ 0.707), wide (r = 1), and ultrawide (r = sqrt(2) ~ 1.414)."
+
+#7
+- Class: cmd_question
+  Output: "Run the Bayesian t-test with the medium prior (the default). Type bf_medium <- ttestBF(formula = wpm ~ method, data = typing, rscale = \"medium\")"
+  CorrectAnswer: bf_medium <- ttestBF(formula = wpm ~ method, data = typing, rscale = "medium")
+  AnswerTests: omnitest(correctExpr='bf_medium <- ttestBF(formula = wpm ~ method, data = typing, rscale = "medium")')
+  Hint: "Try bf_medium <- ttestBF(formula = wpm ~ method, data = typing, rscale = \"medium\")"
+
+#8
+- Class: cmd_question
+  Output: "Now run it with the wide prior. Type bf_wide <- ttestBF(formula = wpm ~ method, data = typing, rscale = \"wide\")"
+  CorrectAnswer: bf_wide <- ttestBF(formula = wpm ~ method, data = typing, rscale = "wide")
+  AnswerTests: omnitest(correctExpr='bf_wide <- ttestBF(formula = wpm ~ method, data = typing, rscale = "wide")')
+  Hint: "Try bf_wide <- ttestBF(formula = wpm ~ method, data = typing, rscale = \"wide\")"
+
+#9
+- Class: cmd_question
+  Output: "Now run it with the ultrawide prior. Type bf_ultrawide <- ttestBF(formula = wpm ~ method, data = typing, rscale = \"ultrawide\")"
+  CorrectAnswer: bf_ultrawide <- ttestBF(formula = wpm ~ method, data = typing, rscale = "ultrawide")
+  AnswerTests: omnitest(correctExpr='bf_ultrawide <- ttestBF(formula = wpm ~ method, data = typing, rscale = "ultrawide")')
+  Hint: "Try bf_ultrawide <- ttestBF(formula = wpm ~ method, data = typing, rscale = \"ultrawide\")"
+
+#10
+- Class: text
+  Output: "Compare the three Bayes Factors. If all three tell the same story -- for example, all providing strong evidence for H1 or all providing evidence for H0 -- then our conclusion is robust to prior choice. This is exactly the goal of sensitivity analysis."
+
+#11
+- Class: mult_question
+  Output: "Why is prior sensitivity analysis important?"
+  AnswerChoices: To verify that conclusions do not depend entirely on the prior;To find the prior that gives the smallest p-value;To prove the prior is correct;To increase statistical power
+  CorrectAnswer: To verify that conclusions do not depend entirely on the prior
+  AnswerTests: omnitest(correctVal='To verify that conclusions do not depend entirely on the prior')
+  Hint: Think about what would happen if your conclusions changed dramatically with a different prior.
+
+#12
+- Class: text
+  Output: "We can go beyond just three scales. Let's systematically vary the prior scale from 0.1 to 2.0 and compute the Bayes Factor at each value. This will let us create a sensitivity plot."
+
+#13
+- Class: cmd_question
+  Output: "Create a vector of prior scales and compute the BF at each one. Type scales <- seq(0.1, 2.0, by = 0.1); bf_values <- sapply(scales, function(r) extractBF(ttestBF(formula = wpm ~ method, data = typing, rscale = r))$bf)"
+  CorrectAnswer: scales <- seq(0.1, 2.0, by = 0.1); bf_values <- sapply(scales, function(r) extractBF(ttestBF(formula = wpm ~ method, data = typing, rscale = r))$bf)
+  AnswerTests: omnitest(correctExpr='scales <- seq(0.1, 2.0, by = 0.1); bf_values <- sapply(scales, function(r) extractBF(ttestBF(formula = wpm ~ method, data = typing, rscale = r))$bf)')
+  Hint: "Try scales <- seq(0.1, 2.0, by = 0.1); bf_values <- sapply(scales, function(r) extractBF(ttestBF(formula = wpm ~ method, data = typing, rscale = r))$bf)"
+
+#14
+- Class: cmd_question
+  Output: "Now plot the Bayes Factor as a function of the prior scale. Type plot(scales, bf_values, type = \"b\", xlab = \"Prior Scale (r)\", ylab = \"Bayes Factor\", main = \"Sensitivity Analysis\", pch = 19)"
+  CorrectAnswer: plot(scales, bf_values, type = "b", xlab = "Prior Scale (r)", ylab = "Bayes Factor", main = "Sensitivity Analysis", pch = 19)
+  AnswerTests: omnitest(correctExpr='plot(scales, bf_values, type = "b", xlab = "Prior Scale (r)", ylab = "Bayes Factor", main = "Sensitivity Analysis", pch = 19)')
+  Hint: "Try plot(scales, bf_values, type = \"b\", xlab = \"Prior Scale (r)\", ylab = \"Bayes Factor\", main = \"Sensitivity Analysis\", pch = 19)"
+
+#15
+- Class: cmd_question
+  Output: "Add reference lines at BF = 3 (moderate evidence for H1) and BF = 1/3 (moderate evidence for H0). Type abline(h = 3, lty = 2, col = \"red\"); abline(h = 1/3, lty = 2, col = \"blue\")"
+  CorrectAnswer: abline(h = 3, lty = 2, col = "red"); abline(h = 1/3, lty = 2, col = "blue")
+  AnswerTests: omnitest(correctExpr='abline(h = 3, lty = 2, col = "red"); abline(h = 1/3, lty = 2, col = "blue")')
+  Hint: "Try abline(h = 3, lty = 2, col = \"red\"); abline(h = 1/3, lty = 2, col = \"blue\")"
+
+#16
+- Class: text
+  Output: "The sensitivity plot shows how the Bayes Factor changes as we vary the prior scale. The red dashed line marks BF = 3 (moderate evidence for H1) and the blue dashed line marks BF = 1/3 (moderate evidence for H0). If the curve stays above 3 for a wide range of prior scales, the evidence for H1 is robust. The range of prior scales over which the qualitative conclusion remains the same is called the Bayes factor robustness region."
+
+#17
+- Class: mult_question
+  Output: "If BF10 = 25 with a narrow prior and BF10 = 18 with a wide prior, what can we conclude?"
+  AnswerChoices: The evidence for H1 is robust across priors;We should use the narrow prior because it gives a larger BF;The wide prior is wrong;The analysis is invalid
+  CorrectAnswer: The evidence for H1 is robust across priors
+  AnswerTests: omnitest(correctVal='The evidence for H1 is robust across priors')
+  Hint: Both BFs tell the same qualitative story -- strong evidence for H1.
+
+#18
+- Class: text
+  Output: "So far we have used default priors, which are non-informative. When you have domain knowledge from previous research, you can use informative priors. For example, if prior studies consistently show an effect size of d = 0.5 for a typing intervention, you could centre your prior there. Sensitivity analysis becomes even more important when informative priors are used, because reviewers will want to see that your results hold under alternative prior choices."
+
+#19
+- Class: cmd_question
+  Output: "Let's visualise three Beta priors of varying strength to understand how informativeness affects the shape. Type prior_weak <- dbeta(seq(0,1,0.01), 1, 1); prior_moderate <- dbeta(seq(0,1,0.01), 10, 10); prior_strong <- dbeta(seq(0,1,0.01), 50, 50); plot(seq(0,1,0.01), prior_strong, type=\"l\", col=\"red\", ylab=\"Density\", xlab=\"Probability\", main=\"Comparing Priors\"); lines(seq(0,1,0.01), prior_moderate, col=\"blue\"); lines(seq(0,1,0.01), prior_weak, col=\"green\")"
+  CorrectAnswer: prior_weak <- dbeta(seq(0,1,0.01), 1, 1); prior_moderate <- dbeta(seq(0,1,0.01), 10, 10); prior_strong <- dbeta(seq(0,1,0.01), 50, 50); plot(seq(0,1,0.01), prior_strong, type="l", col="red", ylab="Density", xlab="Probability", main="Comparing Priors"); lines(seq(0,1,0.01), prior_moderate, col="blue"); lines(seq(0,1,0.01), prior_weak, col="green")
+  AnswerTests: omnitest(correctExpr='prior_weak <- dbeta(seq(0,1,0.01), 1, 1); prior_moderate <- dbeta(seq(0,1,0.01), 10, 10); prior_strong <- dbeta(seq(0,1,0.01), 50, 50); plot(seq(0,1,0.01), prior_strong, type="l", col="red", ylab="Density", xlab="Probability", main="Comparing Priors"); lines(seq(0,1,0.01), prior_moderate, col="blue"); lines(seq(0,1,0.01), prior_weak, col="green")')
+  Hint: Copy and paste the full command from the instructions.
+
+#20
+- Class: mult_question
+  Output: "When is it most appropriate to use an informative prior?"
+  AnswerChoices: When prior research provides reliable estimates;When you want to guarantee a significant result;Always;Never -- priors should always be vague
+  CorrectAnswer: When prior research provides reliable estimates
+  AnswerTests: omnitest(correctVal='When prior research provides reliable estimates')
+  Hint: Think about when you would have trustworthy information to put into a prior.
+
+#21
+- Class: text
+  Output: "Summary: Prior sensitivity analysis is an essential part of any Bayesian analysis. Always report how your Bayes Factor or posterior changes across a range of plausible priors. If conclusions are stable, you can be confident they are not an artefact of your prior choice. When writing up your results, include a sensitivity plot or a table showing BFs under different priors. This transparency strengthens the credibility of your findings."

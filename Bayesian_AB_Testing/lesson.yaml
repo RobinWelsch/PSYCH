@@ -1,0 +1,138 @@
+- Class: meta
+  Course: PsychMetHCI - Statistical Methods in Human-Computer Interaction
+  Lesson: Bayesian_AB_Testing
+  Author: Robin Welsch & Tapio Tuloisela
+  Type: Standard
+  Organization: Aalto University
+  Version: 4.0.0
+
+#1
+- Class: script
+  Output: Here are some notes for this module. When you've saved the notes, type submit().
+  AnswerTests: script_results_identical('saved')
+  Hint: Make sure the last line in your script reads as saved <- "Y".
+  Script: Notes.R
+
+- Class: text
+  Output: "You've spent the course learning frequentist statistics. Now we introduce an alternative framework -- Bayesian statistics."
+
+- Class: text
+  Output: "The core idea is this -- instead of asking 'what is the probability of this data given the null hypothesis?' (the frequentist p-value), we ask 'what is the probability of my hypothesis given the data?' This is a fundamentally different question, and many researchers find it more intuitive."
+
+#4
+- Class: text
+  Output: "Bayes' theorem gives us the math: P(theta | data) is proportional to P(data | theta) times P(theta). In plain language: Posterior = Likelihood x Prior. The posterior is our updated belief about a parameter after seeing the data. The likelihood is how well the data fits a given parameter value. The prior is what we believed before seeing the data."
+
+- Class: mult_question
+  Output: "In Bayesian statistics, what does the 'prior' represent?"
+  AnswerChoices: Our belief before seeing data;The p-value;The sample mean;The confidence interval
+  CorrectAnswer: Our belief before seeing data
+  AnswerTests: omnitest(correctVal='Our belief before seeing data')
+  Hint: Think about what information we have before collecting data.
+
+#6
+- Class: text
+  Output: "Imagine a team of UX researchers is testing whether a new conversational AI interface (Design B) improves task completion rates compared to the current design (Design A) for a customer support chatbot. They randomly assigned 200 users to one of the two designs and recorded whether each user completed the support task."
+
+- Class: cmd_question
+  Output: Let's look at the data. Type chatbot |> head() to see the first few rows.
+  CorrectAnswer: chatbot |> head()
+  AnswerTests: omnitest(correctExpr='chatbot |> head()')
+  Hint: Try chatbot |> head()
+
+- Class: cmd_question
+  Output: Now let's get the success rate and sample size for each design. Pipe chatbot into group_by(design) and then summarise(success_rate = mean(completed), n = n()).
+  CorrectAnswer: chatbot |> group_by(design) |> summarise(success_rate = mean(completed), n = n())
+  AnswerTests: omnitest(correctExpr='chatbot |> group_by(design) |> summarise(success_rate = mean(completed), n = n())')
+  Hint: Try chatbot |> group_by(design) |> summarise(success_rate = mean(completed), n = n())
+
+#9
+- Class: text
+  Output: "Now let's think Bayesian. For binary outcomes like task completion (success or failure), we use the Beta distribution as our prior for the success probability. The Beta distribution is defined on [0, 1], making it perfect for modelling probabilities."
+
+- Class: text
+  Output: "Beta(1, 1) is a uniform prior -- it says every success probability between 0 and 1 is equally likely. This represents having no prior knowledge. More generally, Beta(alpha, beta) can be thought of as having observed (alpha - 1) prior successes and (beta - 1) prior failures. The Beta distribution is called the 'conjugate prior' for binomial data because the posterior is also a Beta distribution."
+
+#11
+- Class: cmd_question
+  Output: Let's visualize the uniform prior Beta(1,1). Type the following to plot the density curve.
+  CorrectAnswer: curve(dbeta(x, 1, 1), from=0, to=1, ylab="Density", xlab="Success Probability", main="Uniform Prior: Beta(1,1)")
+  AnswerTests: omnitest(correctExpr='curve(dbeta(x, 1, 1), from=0, to=1, ylab="Density", xlab="Success Probability", main="Uniform Prior: Beta(1,1)")')
+  Hint: Try curve(dbeta(x, 1, 1), from=0, to=1, ylab="Density", xlab="Success Probability", main="Uniform Prior: Beta(1,1)")
+
+- Class: text
+  Output: "After observing data, the posterior is Beta(alpha + successes, beta + failures). This elegant update rule is called the conjugate update. Starting from our prior Beta(1,1) and adding what we observe, we get a posterior that reflects both our prior beliefs and the data."
+
+#13
+- Class: cmd_question
+  Output: Let's count the successes for Design A. Type a_success <- sum(chatbot$completed[chatbot$design == "A"])
+  CorrectAnswer: a_success <- sum(chatbot$completed[chatbot$design == "A"])
+  AnswerTests: omnitest(correctExpr='a_success <- sum(chatbot$completed[chatbot$design == "A"])')
+  Hint: Try a_success <- sum(chatbot$completed[chatbot$design == "A"])
+
+- Class: cmd_question
+  Output: Now count the failures for Design A.
+  CorrectAnswer: a_fail <- sum(chatbot$completed[chatbot$design == "A"] == 0)
+  AnswerTests: omnitest(correctExpr='a_fail <- sum(chatbot$completed[chatbot$design == "A"] == 0)')
+  Hint: Try a_fail <- sum(chatbot$completed[chatbot$design == "A"] == 0)
+
+#15
+- Class: cmd_question
+  Output: Now let's plot the posterior distribution for Design A. This is Beta(1 + a_success, 1 + a_fail).
+  CorrectAnswer: curve(dbeta(x, 1 + a_success, 1 + a_fail), from=0, to=1, col="blue", ylab="Density", xlab="Success Probability", main="Posterior for Design A")
+  AnswerTests: omnitest(correctExpr='curve(dbeta(x, 1 + a_success, 1 + a_fail), from=0, to=1, col="blue", ylab="Density", xlab="Success Probability", main="Posterior for Design A")')
+  Hint: Try curve(dbeta(x, 1 + a_success, 1 + a_fail), from=0, to=1, col="blue", ylab="Density", xlab="Success Probability", main="Posterior for Design A")
+
+- Class: cmd_question
+  Output: Now count the successes for Design B.
+  CorrectAnswer: b_success <- sum(chatbot$completed[chatbot$design == "B"])
+  AnswerTests: omnitest(correctExpr='b_success <- sum(chatbot$completed[chatbot$design == "B"])')
+  Hint: Try b_success <- sum(chatbot$completed[chatbot$design == "B"])
+
+- Class: cmd_question
+  Output: And the failures for Design B.
+  CorrectAnswer: b_fail <- sum(chatbot$completed[chatbot$design == "B"] == 0)
+  AnswerTests: omnitest(correctExpr='b_fail <- sum(chatbot$completed[chatbot$design == "B"] == 0)')
+  Hint: Try b_fail <- sum(chatbot$completed[chatbot$design == "B"] == 0)
+
+#18
+- Class: cmd_question
+  Output: "Now let's overlay both posteriors on one plot. We'll plot Design B in red first, then add Design A in blue."
+  CorrectAnswer: curve(dbeta(x, 1 + b_success, 1 + b_fail), from=0, to=1, col="red", ylab="Density", xlab="Success Probability", main="Posteriors for Both Designs"); curve(dbeta(x, 1 + a_success, 1 + a_fail), add=TRUE, col="blue")
+  AnswerTests: omnitest(correctExpr='curve(dbeta(x, 1 + b_success, 1 + b_fail), from=0, to=1, col="red", ylab="Density", xlab="Success Probability", main="Posteriors for Both Designs"); curve(dbeta(x, 1 + a_success, 1 + a_fail), add=TRUE, col="blue")')
+  Hint: "Try curve(dbeta(x, 1 + b_success, 1 + b_fail), from=0, to=1, col=\"red\", ylab=\"Density\", xlab=\"Success Probability\", main=\"Posteriors for Both Designs\"); curve(dbeta(x, 1 + a_success, 1 + a_fail), add=TRUE, col=\"blue\")"
+
+- Class: text
+  Output: "The plot shows two posterior distributions. Blue is Design A, and red is Design B. Notice how the curves are separated -- this suggests the two designs have different success probabilities. But how confident are we? We can directly compute the probability that Design B is better than Design A by simulating from both posteriors."
+
+#20
+- Class: cmd_question
+  Output: "Let's simulate 10000 draws from each posterior and compute the probability that B is better than A."
+  CorrectAnswer: set.seed(42); samples_a <- rbeta(10000, 1 + a_success, 1 + a_fail); samples_b <- rbeta(10000, 1 + b_success, 1 + b_fail); mean(samples_b > samples_a)
+  AnswerTests: omnitest(correctExpr='set.seed(42); samples_a <- rbeta(10000, 1 + a_success, 1 + a_fail); samples_b <- rbeta(10000, 1 + b_success, 1 + b_fail); mean(samples_b > samples_a)')
+  Hint: "Try set.seed(42); samples_a <- rbeta(10000, 1 + a_success, 1 + a_fail); samples_b <- rbeta(10000, 1 + b_success, 1 + b_fail); mean(samples_b > samples_a)"
+
+- Class: mult_question
+  Output: "If P(B > A) = 0.95, what does this mean?"
+  AnswerChoices: There is a 95% probability that Design B is truly better than Design A;We reject H0 at alpha = 0.05;The effect size is 0.95;Design B's success rate is 95%
+  CorrectAnswer: There is a 95% probability that Design B is truly better than Design A
+  AnswerTests: omnitest(correctVal='There is a 95% probability that Design B is truly better than Design A')
+  Hint: Think about what a direct probability statement means in Bayesian statistics.
+
+#22
+- Class: text
+  Output: "Compare this to the frequentist approach: a p-value does NOT tell you the probability that your hypothesis is true. It tells you the probability of observing data this extreme if the null hypothesis were true. The Bayesian approach gives us a direct probability statement -- 'there is a 95% chance B is better than A' -- which is often what researchers actually want to know. There is no arbitrary significance threshold; instead, we get a full probability."
+
+- Class: mult_question
+  Output: "What is the conjugate prior for a binomial likelihood?"
+  AnswerChoices: Beta;Normal;Gamma;Poisson
+  CorrectAnswer: Beta
+  AnswerTests: omnitest(correctVal='Beta')
+  Hint: Which distribution is defined on [0, 1] and updates neatly with binomial data?
+
+- Class: mult_question
+  Output: "If our prior is Beta(1,1) and we observe 7 successes and 3 failures, what is our posterior?"
+  AnswerChoices: Beta(8,4);Beta(7,3);Beta(1,1);Beta(8,3)
+  CorrectAnswer: Beta(8,4)
+  AnswerTests: omnitest(correctVal='Beta(8,4)')
+  Hint: "Remember the update rule: Beta(alpha + successes, beta + failures). With Beta(1,1) as prior, alpha=1 and beta=1."

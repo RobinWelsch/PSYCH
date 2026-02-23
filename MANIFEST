@@ -27,5 +27,12 @@ Kruskal_Wallis_ANOVA
 Regression
 Chi_Square
 Pivoting_Data
-
-
+Bayesian_AB_Testing
+Understanding_the_Posterior
+Bayesian_T_Test
+Prior_Sensitivity_Analysis
+Installing_brms_and_Stan
+Bayesian_Regression_brms
+Bayesian_Hierarchical_Models
+Bayesian_Link_Functions
+Bayesian_Cognitive_Modelling

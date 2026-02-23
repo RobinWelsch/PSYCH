@@ -1,0 +1,149 @@
+- Class: meta
+  Course: PsychMetHCI - Statistical Methods in Human-Computer Interaction
+  Lesson: Bayesian_Cognitive_Modelling
+  Author: Robin Welsch & Tapio Tuloisela
+  Type: Standard
+  Organization: Aalto University
+  Version: 4.0.0
+
+#1
+- Class: script
+  Output: To save the notes for this module, copy and paste the code provided into your own RNotebook. Type submit() when you have finished saving these notes.
+  AnswerTests: script_results_identical('saved')
+  Hint: "Don't change anything, just type submit(). If you did and you don't know how to fix it, just type skip(), and you'll be all set."
+  Script: Notes.R
+
+#2
+- Class: text
+  Output: "In HCI, we often have theory-driven models of human performance. Unlike generic statistical models, these cognitive models have parameters with specific psychological interpretations. Bayesian methods are ideal for fitting these models because they provide full posterior distributions over meaningful parameters and naturally handle hierarchical structure."
+
+#3
+- Class: text
+  Output: "Part 1: Fitts' Law. Fitts' law is one of the most robust models in HCI. It predicts that movement time (MT) is a linear function of the Index of Difficulty (ID): MT = a + b * ID, where ID = log2(2D/W). Here D is the distance to the target and W is the target width. The parameter 'a' represents the base movement time (intercept) and 'b' represents the rate of information processing in milliseconds per bit."
+
+#4
+- Class: text
+  Output: "In this simulated study, 30 participants performed a reciprocal pointing task on a touchscreen with varying target widths and distances. Movement time was recorded for each trial."
+
+#5
+- Class: cmd_question
+  Output: "Let's look at the Fitts' law dataset. Type fitts |> head() to see the first few rows."
+  CorrectAnswer: fitts |> head()
+  AnswerTests: omnitest(correctExpr='fitts |> head()')
+  Hint: Try fitts |> head()
+
+#6
+- Class: cmd_question
+  Output: "Let's visualize the relationship between Index of Difficulty and movement time."
+  CorrectAnswer: fitts |> ggplot(aes(x = ID, y = movement_time)) + geom_point(alpha = 0.1) + geom_smooth(method = "lm") + xlab("Index of Difficulty (bits)") + ylab("Movement Time (ms)")
+  AnswerTests: omnitest(correctExpr='fitts |> ggplot(aes(x = ID, y = movement_time)) + geom_point(alpha = 0.1) + geom_smooth(method = "lm") + xlab("Index of Difficulty (bits)") + ylab("Movement Time (ms)")')
+  Hint: Try fitts |> ggplot(aes(x = ID, y = movement_time)) + geom_point(alpha = 0.1) + geom_smooth(method = "lm") + xlab("Index of Difficulty (bits)") + ylab("Movement Time (ms)")
+
+#7
+- Class: text
+  Output: "Fitts' law predicts a linear relationship between ID and movement time, which the plot confirms. Let's fit this as a Bayesian hierarchical model using brms. By including random intercepts and slopes for each participant, we can estimate the population-level Fitts' law parameters while accounting for individual differences in motor performance."
+
+#8
+- Class: cmd_question
+  Output: "Fit a Bayesian hierarchical Fitts' law model. The formula movement_time ~ ID + (1 + ID | participant) includes a fixed effect of ID plus random intercepts and slopes per participant."
+  CorrectAnswer: fit_fitts <- brm(movement_time ~ ID + (1 + ID | participant), data = fitts, seed = 42, silent = 2, refresh = 0)
+  AnswerTests: omnitest(correctExpr='fit_fitts <- brm(movement_time ~ ID + (1 + ID | participant), data = fitts, seed = 42, silent = 2, refresh = 0)')
+  Hint: Try fit_fitts <- brm(movement_time ~ ID + (1 + ID | participant), data = fitts, seed = 42, silent = 2, refresh = 0)
+
+#9
+- Class: cmd_question
+  Output: "Let's look at the model summary to see the population-level Fitts' law parameters."
+  CorrectAnswer: summary(fit_fitts)
+  AnswerTests: omnitest(correctExpr='summary(fit_fitts)')
+  Hint: Try summary(fit_fitts)
+
+#10
+- Class: cmd_question
+  Output: "Now let's look at the participant-level (random) effects. These show how each participant deviates from the population-level Fitts' law parameters."
+  CorrectAnswer: ranef(fit_fitts)
+  AnswerTests: omnitest(correctExpr='ranef(fit_fitts)')
+  Hint: Try ranef(fit_fitts)
+
+#11
+- Class: mult_question
+  Output: "In Fitts' law (MT = a + b x ID), what does the parameter b represent?"
+  AnswerChoices: The rate of information processing -- time per bit;The base movement time;The target width;The distance to target
+  CorrectAnswer: The rate of information processing -- time per bit
+  AnswerTests: omnitest(correctVal='The rate of information processing -- time per bit')
+  Hint: The parameter b is the slope of the linear relationship between ID (measured in bits) and movement time (measured in ms), so it reflects how many ms each additional bit of difficulty adds.
+
+#12
+- Class: text
+  Output: "The hierarchical model lets us estimate the population-level Fitts' law parameters while accounting for individual differences. The population-level intercept estimates the base movement time 'a', and the population-level slope of ID estimates the information processing rate 'b'. The random effects capture how much each participant deviates from these population averages."
+
+#13
+- Class: mult_question
+  Output: "Why is a hierarchical model better than fitting Fitts' law separately per participant?"
+  AnswerChoices: It borrows strength across participants giving better estimates especially for participants with few trials;It is faster to compute;It assumes all participants are identical;It eliminates the need for repeated measures
+  CorrectAnswer: It borrows strength across participants giving better estimates especially for participants with few trials
+  AnswerTests: omnitest(correctVal='It borrows strength across participants giving better estimates especially for participants with few trials')
+  Hint: Hierarchical models use partial pooling, which means individual estimates are pulled toward the group mean. This is especially helpful when some participants have less data.
+
+#14
+- Class: text
+  Output: "Part 2: Drift Diffusion Model (DDM). The DDM is a cognitive model of speeded decision making. It models both response time and accuracy simultaneously as arising from a single evidence accumulation process. A decision maker accumulates noisy evidence over time until one of two decision boundaries is reached."
+
+#15
+- Class: text
+  Output: "The DDM has several key parameters. Drift rate (v) reflects the rate of evidence accumulation -- higher values mean faster and more accurate decisions. Boundary separation (a) reflects response caution -- higher values mean slower but more accurate responding (the speed-accuracy trade-off). Non-decision time (ndt) captures sensory encoding and motor execution time. Bias (beta) reflects a priori preference for one response over the other."
+
+#16
+- Class: text
+  Output: "In this simulated study, 40 participants performed a lexical decision task (word vs nonword) on a smartphone, with stimulus type as a key predictor. We expect words to have higher drift rates than nonwords because words are easier to categorize."
+
+#17
+- Class: cmd_question
+  Output: "Let's look at the DDM dataset. Type ddm_data |> head() to see the first few rows."
+  CorrectAnswer: ddm_data |> head()
+  AnswerTests: omnitest(correctExpr='ddm_data |> head()')
+  Hint: Try ddm_data |> head()
+
+#18
+- Class: cmd_question
+  Output: "Let's compute summary statistics by stimulus type to see if words and nonwords differ in RT and accuracy."
+  CorrectAnswer: ddm_data |> group_by(stimulus_type) |> summarise(mean_rt = mean(rt), accuracy = mean(response))
+  AnswerTests: omnitest(correctExpr='ddm_data |> group_by(stimulus_type) |> summarise(mean_rt = mean(rt), accuracy = mean(response))')
+  Hint: Try ddm_data |> group_by(stimulus_type) |> summarise(mean_rt = mean(rt), accuracy = mean(response))
+
+#19
+- Class: text
+  Output: "brms can fit DDMs using family = wiener(). The Wiener distribution is the first-passage time distribution for a diffusion process -- it describes the time it takes for a random walk with drift to hit a boundary. This lets us jointly model RT and accuracy within a single principled framework."
+
+#20
+- Class: cmd_question
+  Output: "Fit a DDM using brms. The formula specifies that stimulus_type predicts drift rate, while boundary separation (bs), non-decision time (ndt), and bias are estimated as intercepts. The dec(response) indicates which boundary was hit."
+  CorrectAnswer: fit_ddm <- brm(bf(rt | dec(response) ~ stimulus_type, bs ~ 1, ndt ~ 1, bias ~ 1), data = ddm_data, family = wiener(), seed = 42, init = 0.5, silent = 2, refresh = 0)
+  AnswerTests: omnitest(correctExpr='fit_ddm <- brm(bf(rt | dec(response) ~ stimulus_type, bs ~ 1, ndt ~ 1, bias ~ 1), data = ddm_data, family = wiener(), seed = 42, init = 0.5, silent = 2, refresh = 0)')
+  Hint: Try fit_ddm <- brm(bf(rt | dec(response) ~ stimulus_type, bs ~ 1, ndt ~ 1, bias ~ 1), data = ddm_data, family = wiener(), seed = 42, init = 0.5, silent = 2, refresh = 0)
+
+#21
+- Class: cmd_question
+  Output: "Let's look at the DDM model summary to interpret the cognitive parameters."
+  CorrectAnswer: summary(fit_ddm)
+  AnswerTests: omnitest(correctExpr='summary(fit_ddm)')
+  Hint: Try summary(fit_ddm)
+
+#22
+- Class: text
+  Output: "Let's interpret the DDM parameters. The drift rate intercept is the drift rate for the reference level of stimulus_type, and the stimulus_type coefficient tells us how drift rate differs between conditions. The bs parameter is boundary separation on the log scale. The ndt parameter is non-decision time on the log scale. The bias parameter (on the logit scale) indicates whether participants had a prior tendency toward one response. These parameter estimates let us decompose observed RT differences into cognitive components."
+
+#23
+- Class: mult_question
+  Output: "In a Drift Diffusion Model, what does higher boundary separation (a) indicate?"
+  AnswerChoices: More cautious responding -- slower but more accurate;Faster evidence accumulation;Shorter motor response time;Higher stimulus difficulty
+  CorrectAnswer: More cautious responding -- slower but more accurate
+  AnswerTests: omnitest(correctVal='More cautious responding -- slower but more accurate')
+  Hint: Boundary separation reflects the speed-accuracy trade-off. Wider boundaries require more evidence before a decision is made.
+
+#24
+- Class: mult_question
+  Output: "What makes the DDM different from simply analyzing response times with a regular regression?"
+  AnswerChoices: The DDM jointly models RT and accuracy as arising from a single evidence accumulation process;The DDM uses a normal distribution;The DDM ignores errors;The DDM is non-parametric
+  CorrectAnswer: The DDM jointly models RT and accuracy as arising from a single evidence accumulation process
+  AnswerTests: omnitest(correctVal='The DDM jointly models RT and accuracy as arising from a single evidence accumulation process')
+  Hint: The key advantage of the DDM is that it provides a process-level explanation, modelling both speed and accuracy as outcomes of the same underlying decision process.

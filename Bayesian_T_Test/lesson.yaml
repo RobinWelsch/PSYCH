@@ -1,0 +1,151 @@
+- Class: meta
+  Course: PsychMetHCI - Statistical Methods in Human-Computer Interaction
+  Lesson: Bayesian_T_Test
+  Author: Robin Welsch & Tapio Tuloisela
+  Type: Standard
+  Organization: Aalto University
+  Version: 4.0.0
+
+#1
+- Class: script
+  Output: To save the notes for this module, copy and paste the code provided into your own RNotebook. Type submit() when you have finished saving these notes.
+  AnswerTests: script_results_identical('saved')
+  Hint: "Don't change anything, just type submit(). If you did and you don't know how to fix it, just type skip(), and you'll be all set."
+  Script: Notes.R
+
+#2
+- Class: text
+  Output: "We've built up Bayesian intuition. Now let's apply it to the classic t-test using the BayesFactor package."
+
+#3
+- Class: text
+  Output: "UX researchers at a mobile app company wanted to test whether a dark mode interface reduces visual search time. They randomly assigned 120 participants to use either the standard light mode or a new dark mode, and measured how long it took them to find a specific menu item."
+
+#4
+- Class: cmd_question
+  Output: Let's look at the data now by piping (|>) our dataset (darkmode) into head().
+  CorrectAnswer: darkmode |> head()
+  AnswerTests: omnitest(correctExpr='darkmode |> head()')
+  Hint: Try darkmode |> head().
+
+#5
+- Class: cmd_question
+  Output: "Let's get descriptive statistics by condition. Pipe darkmode into group_by(condition), then into summarise() with M = mean(time), SD = sd(time), and N = n()."
+  CorrectAnswer: darkmode |> group_by(condition) |> summarise(M = mean(time), SD = sd(time), N = n())
+  AnswerTests: omnitest(correctExpr='darkmode |> group_by(condition) |> summarise(M = mean(time), SD = sd(time), N = n())')
+  Hint: darkmode |> group_by(condition) |> summarise(M = mean(time), SD = sd(time), N = n())
+
+#6
+- Class: text
+  Output: "First, let's run the frequentist version for comparison. This will give us a p-value that we can contrast with the Bayes Factor approach."
+
+#7
+- Class: cmd_question
+  Output: Run a frequentist t-test on the data using t.test(time ~ condition, data = darkmode).
+  CorrectAnswer: t.test(time ~ condition, data = darkmode)
+  AnswerTests: omnitest(correctExpr='t.test(time ~ condition, data = darkmode)')
+  Hint: t.test(time ~ condition, data = darkmode)
+
+#8
+- Class: text
+  Output: "Now the Bayesian approach. Instead of a p-value, we get a Bayes Factor (BF). BF10 tells us how much more likely the data are under H1 (there is a difference) compared to H0 (there is no difference)."
+
+#9
+- Class: text
+  Output: "Interpretation guidelines for Bayes Factors: BF > 3 is moderate evidence, BF > 10 is strong evidence, BF > 30 is very strong evidence, and BF > 100 is extreme evidence for H1. BF < 1/3 is moderate evidence for H0. A BF between 1/3 and 3 is inconclusive."
+
+#10
+- Class: cmd_question
+  Output: "Now run the Bayesian t-test using ttestBF(formula = time ~ condition, data = darkmode)."
+  CorrectAnswer: ttestBF(formula = time ~ condition, data = darkmode)
+  AnswerTests: omnitest(correctExpr='ttestBF(formula = time ~ condition, data = darkmode)')
+  Hint: ttestBF(formula = time ~ condition, data = darkmode)
+
+#11
+- Class: mult_question
+  Output: "A Bayes Factor of 15.3 in favor of H1 means..."
+  AnswerChoices: The data are about 15 times more likely under H1 than H0;There is a 15.3% chance H1 is true;The p-value is 1/15.3;The effect size is 15.3
+  CorrectAnswer: The data are about 15 times more likely under H1 than H0
+  AnswerTests: omnitest(correctVal='The data are about 15 times more likely under H1 than H0')
+  Hint: The Bayes Factor is a ratio of how likely the data are under one hypothesis versus another.
+
+#12
+- Class: text
+  Output: "The BayesFactor package uses a Cauchy prior on effect size, known as the JZS prior. The default scale parameter is r = sqrt(2)/2 (approximately 0.707). This prior encodes a reasonable range of expected effect sizes."
+
+#13
+- Class: cmd_question
+  Output: "Let's save the result to a variable. Run bf_result <- ttestBF(formula = time ~ condition, data = darkmode)."
+  CorrectAnswer: bf_result <- ttestBF(formula = time ~ condition, data = darkmode)
+  AnswerTests: omnitest(correctExpr='bf_result <- ttestBF(formula = time ~ condition, data = darkmode)')
+  Hint: bf_result <- ttestBF(formula = time ~ condition, data = darkmode)
+
+#14
+- Class: cmd_question
+  Output: "Now we can sample from the posterior distribution. Run posterior_samples <- posterior(bf_result, iterations = 10000)."
+  CorrectAnswer: posterior_samples <- posterior(bf_result, iterations = 10000)
+  AnswerTests: omnitest(correctExpr='posterior_samples <- posterior(bf_result, iterations = 10000)')
+  Hint: posterior_samples <- posterior(bf_result, iterations = 10000)
+
+#15
+- Class: cmd_question
+  Output: Plot the posterior samples to visualize the posterior distributions of the parameters. Type plot(posterior_samples).
+  CorrectAnswer: plot(posterior_samples)
+  AnswerTests: omnitest(correctExpr='plot(posterior_samples)')
+  Hint: plot(posterior_samples)
+
+#16
+- Class: cmd_question
+  Output: Get a numerical summary of the posterior samples by typing summary(posterior_samples).
+  CorrectAnswer: summary(posterior_samples)
+  AnswerTests: omnitest(correctExpr='summary(posterior_samples)')
+  Hint: summary(posterior_samples)
+
+#17
+- Class: text
+  Output: "The 'delta' parameter in the output is the standardized effect size. It is similar to Cohen's d but estimated within a Bayesian framework. The posterior distribution of delta tells you about the most credible values for the effect size, given the data and the prior."
+
+#18
+- Class: mult_question
+  Output: "What does a Bayes Factor of 0.15 (or equivalently BF01 = 6.67) tell us?"
+  AnswerChoices: There is moderate evidence for the null hypothesis;The experiment failed;We need more data;The effect is exactly zero
+  CorrectAnswer: There is moderate evidence for the null hypothesis
+  AnswerTests: omnitest(correctVal='There is moderate evidence for the null hypothesis')
+  Hint: "A BF10 less than 1/3 means moderate evidence for the null. BF01 = 1/BF10, so BF01 = 6.67 means the data are about 6.67 times more likely under H0."
+
+#19
+- Class: text
+  Output: "A key advantage of Bayesian hypothesis testing is that Bayes Factors can provide evidence FOR the null hypothesis, not just against it. Frequentist tests can only reject or fail to reject the null -- they cannot confirm it."
+
+#20
+- Class: cmd_question
+  Output: "Let's test sensitivity to the prior. Run the Bayesian t-test with rscale = \"medium\" (r = sqrt(2)/2, same as default)."
+  CorrectAnswer: ttestBF(formula = time ~ condition, data = darkmode, rscale = "medium")
+  AnswerTests: omnitest(correctExpr='ttestBF(formula = time ~ condition, data = darkmode, rscale = "medium")')
+  Hint: ttestBF(formula = time ~ condition, data = darkmode, rscale = "medium")
+
+#21
+- Class: cmd_question
+  Output: "Now try a wider prior with rscale = \"wide\" (r = 1). A wider prior spreads more probability over larger effect sizes."
+  CorrectAnswer: ttestBF(formula = time ~ condition, data = darkmode, rscale = "wide")
+  AnswerTests: omnitest(correctExpr='ttestBF(formula = time ~ condition, data = darkmode, rscale = "wide")')
+  Hint: ttestBF(formula = time ~ condition, data = darkmode, rscale = "wide")
+
+#22
+- Class: mult_question
+  Output: "Which of the following is an advantage of Bayesian hypothesis testing over frequentist testing?"
+  AnswerChoices: It can provide evidence for the null hypothesis;It always gives smaller p-values;It does not require assumptions about normality;It eliminates the need for random sampling
+  CorrectAnswer: It can provide evidence for the null hypothesis
+  AnswerTests: omnitest(correctVal='It can provide evidence for the null hypothesis')
+  Hint: Think about what frequentist tests cannot do that Bayesian tests can.
+
+#23
+- Class: text
+  Output: "We can also conduct one-sided (directional) Bayesian t-tests using the nullInterval argument. This restricts the alternative hypothesis to a specific direction of effect, such as only positive or only negative effect sizes."
+
+#24
+- Class: cmd_question
+  Output: "Run a one-sided Bayesian t-test using nullInterval = c(0, Inf), which tests for a positive effect only."
+  CorrectAnswer: ttestBF(formula = time ~ condition, data = darkmode, nullInterval = c(0, Inf))
+  AnswerTests: omnitest(correctExpr='ttestBF(formula = time ~ condition, data = darkmode, nullInterval = c(0, Inf))')
+  Hint: ttestBF(formula = time ~ condition, data = darkmode, nullInterval = c(0, Inf))

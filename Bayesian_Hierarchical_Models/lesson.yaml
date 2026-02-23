@@ -1,0 +1,140 @@
+- Class: meta
+  Course: PsychMetHCI - Statistical Methods in Human-Computer Interaction
+  Lesson: Bayesian_Hierarchical_Models
+  Author: Robin Welsch & Tapio Tuloisela
+  Type: Standard
+  Organization: Aalto University
+  Version: 4.0.0
+
+#1
+- Class: script
+  Output: "To save the notes for this module, copy and paste the code provided into your own RNotebook. Type submit() when you have finished saving these notes."
+  AnswerTests: script_results_identical('saved')
+  Hint: "Don't change anything, just type submit(). If you did and you don't know how to fix it, just type skip(), and you'll be all set."
+  Script: Notes.R
+
+#2
+- Class: text
+  Output: "In HCI research, data often has a nested or grouped structure -- participants within studies, tasks within users, trials within conditions. Standard regression assumes all observations are independent, which is violated when data is grouped. Hierarchical (multilevel/mixed) models handle this by modelling variation at multiple levels simultaneously."
+
+#3
+- Class: text
+  Output: "There are three broad approaches to grouped data. Complete pooling ignores the groups entirely and fits one model to all data. No pooling fits a completely separate model for each group. Partial pooling -- the hierarchical Bayesian approach -- shares information across groups, shrinking group-level estimates toward the overall mean. This is especially helpful when some groups have few observations."
+
+#4
+- Class: text
+  Output: "A UX research consortium benchmarked web usability across 10 different websites. 200 participants (20 per site) each completed 5 tasks of varying difficulty, and their task completion time in seconds was recorded."
+
+#5
+- Class: cmd_question
+  Output: "Let's examine the dataset. Type usability |> head() to see the first few rows."
+  CorrectAnswer: usability |> head()
+  AnswerTests: omnitest(correctExpr='usability |> head()')
+  Hint: Try usability |> head()
+
+#6
+- Class: cmd_question
+  Output: "Now let's get summary statistics by website. Pipe usability into group_by(website) and then summarise(M = mean(time), SD = sd(time), N = n())."
+  CorrectAnswer: usability |> group_by(website) |> summarise(M = mean(time), SD = sd(time), N = n())
+  AnswerTests: omnitest(correctExpr='usability |> group_by(website) |> summarise(M = mean(time), SD = sd(time), N = n())')
+  Hint: Try usability |> group_by(website) |> summarise(M = mean(time), SD = sd(time), N = n())
+
+#7
+- Class: text
+  Output: "Notice that the mean task completion time varies across websites. Some websites appear faster or slower on average. With partial pooling, websites that have fewer observations or more extreme estimates will be shrunk toward the overall grand mean -- borrowing strength from the other groups."
+
+#8
+- Class: cmd_question
+  Output: "Let's start with a complete pooling model -- a standard regression ignoring websites entirely. Fit a brm model predicting time from task_difficulty."
+  CorrectAnswer: fit_pooled <- brm(time ~ task_difficulty, data = usability, seed = 42, silent = 2, refresh = 0)
+  AnswerTests: omnitest(correctExpr='fit_pooled <- brm(time ~ task_difficulty, data = usability, seed = 42, silent = 2, refresh = 0)')
+  Hint: Try fit_pooled <- brm(time ~ task_difficulty, data = usability, seed = 42, silent = 2, refresh = 0)
+
+#9
+- Class: cmd_question
+  Output: "Let's see the results of the pooled model."
+  CorrectAnswer: summary(fit_pooled)
+  AnswerTests: omnitest(correctExpr='summary(fit_pooled)')
+  Hint: Try summary(fit_pooled)
+
+#10
+- Class: text
+  Output: "Now let's fit a hierarchical model with varying intercepts by website. The syntax (1 | website) adds a random intercept for each website -- identical to the lme4/lmerTest syntax you may know from frequentist mixed models. This allows each website to have its own baseline task completion time while sharing information across sites."
+
+#11
+- Class: cmd_question
+  Output: "Fit the hierarchical model with varying intercepts by website."
+  CorrectAnswer: fit_hier <- brm(time ~ task_difficulty + (1 | website), data = usability, seed = 42, silent = 2, refresh = 0)
+  AnswerTests: omnitest(correctExpr='fit_hier <- brm(time ~ task_difficulty + (1 | website), data = usability, seed = 42, silent = 2, refresh = 0)')
+  Hint: Try fit_hier <- brm(time ~ task_difficulty + (1 | website), data = usability, seed = 42, silent = 2, refresh = 0)
+
+#12
+- Class: cmd_question
+  Output: "Let's examine the hierarchical model output. Notice the 'Group-Level Effects' section, which shows the estimated standard deviation of intercepts across websites."
+  CorrectAnswer: summary(fit_hier)
+  AnswerTests: omnitest(correctExpr='summary(fit_hier)')
+  Hint: Try summary(fit_hier)
+
+#13
+- Class: mult_question
+  Output: "What does 'partial pooling' mean in hierarchical models?"
+  AnswerChoices: Group estimates are shrunk toward the overall mean;Data from different groups are combined into one;Each group is analyzed completely independently;Outliers are removed from each group
+  CorrectAnswer: Group estimates are shrunk toward the overall mean
+  AnswerTests: omnitest(correctVal='Group estimates are shrunk toward the overall mean')
+  Hint: Think about how hierarchical models share information across groups.
+
+#14
+- Class: cmd_question
+  Output: "Use ranef() to extract the estimated random effects (deviations from the grand mean) for each website."
+  CorrectAnswer: ranef(fit_hier)
+  AnswerTests: omnitest(correctExpr='ranef(fit_hier)')
+  Hint: Try ranef(fit_hier)
+
+#15
+- Class: text
+  Output: "The ranef() output shows each website's estimated deviation from the grand mean intercept, along with credible intervals. Websites with extreme raw means have been pulled (shrunk) toward the overall average. This shrinkage is stronger for groups with fewer observations or more uncertainty, which is a key advantage of the hierarchical Bayesian approach."
+
+#16
+- Class: cmd_question
+  Output: "Now let's fit a model with both varying intercepts and varying slopes. The formula (1 + task_difficulty | website) allows both the baseline time and the effect of task difficulty to differ across websites."
+  CorrectAnswer: fit_slopes <- brm(time ~ task_difficulty + (1 + task_difficulty | website), data = usability, seed = 42, silent = 2, refresh = 0)
+  AnswerTests: omnitest(correctExpr='fit_slopes <- brm(time ~ task_difficulty + (1 + task_difficulty | website), data = usability, seed = 42, silent = 2, refresh = 0)')
+  Hint: Try fit_slopes <- brm(time ~ task_difficulty + (1 + task_difficulty | website), data = usability, seed = 42, silent = 2, refresh = 0)
+
+#17
+- Class: cmd_question
+  Output: "Examine the varying slopes model. Notice that the Group-Level Effects now include standard deviations for both the intercept and the task_difficulty slope, plus their correlation."
+  CorrectAnswer: summary(fit_slopes)
+  AnswerTests: omnitest(correctExpr='summary(fit_slopes)')
+  Hint: Try summary(fit_slopes)
+
+#18
+- Class: mult_question
+  Output: "In the formula (1 + task_difficulty | website), what varies across websites?"
+  AnswerChoices: Both the intercept and the effect of task difficulty;Only the intercept;Only the slope;The residual variance
+  CorrectAnswer: Both the intercept and the effect of task difficulty
+  AnswerTests: omnitest(correctVal='Both the intercept and the effect of task difficulty')
+  Hint: The (1 + task_difficulty | website) syntax specifies varying intercepts (1) and varying slopes (task_difficulty) by website.
+
+#19
+- Class: text
+  Output: "We can compare models using Leave-One-Out Cross-Validation (LOO-CV). LOO-CV estimates how well each model would predict new, unseen data. The expected log pointwise predictive density (ELPD) quantifies predictive accuracy -- higher (less negative) is better."
+
+#20
+- Class: cmd_question
+  Output: "Add the LOO criterion to both models and compare them. Run the following three statements."
+  CorrectAnswer: fit_pooled <- add_criterion(fit_pooled, "loo"); fit_hier <- add_criterion(fit_hier, "loo"); loo_compare(fit_pooled, fit_hier)
+  AnswerTests: omnitest(correctExpr='fit_pooled <- add_criterion(fit_pooled, "loo"); fit_hier <- add_criterion(fit_hier, "loo"); loo_compare(fit_pooled, fit_hier)')
+  Hint: "Try fit_pooled <- add_criterion(fit_pooled, \"loo\"); fit_hier <- add_criterion(fit_hier, \"loo\"); loo_compare(fit_pooled, fit_hier)"
+
+#21
+- Class: mult_question
+  Output: "In LOO-CV model comparison, a model with a more negative ELPD difference is..."
+  AnswerChoices: Worse at predicting new data;Better at predicting new data;More complex;Simpler
+  CorrectAnswer: Worse at predicting new data
+  AnswerTests: omnitest(correctVal='Worse at predicting new data')
+  Hint: ELPD stands for Expected Log Predictive Density. A more negative difference means lower predictive accuracy.
+
+#22
+- Class: text
+  Output: "To summarise -- hierarchical (multilevel) models are the Bayesian way to handle grouped or nested data. They perform partial pooling, sharing information across groups while allowing each group to have its own parameters. The brms package makes fitting these models as easy as lme4, with the added benefit of full posterior distributions, credible intervals, and principled model comparison via LOO-CV."

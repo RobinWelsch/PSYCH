@@ -1,0 +1,165 @@
+- Class: meta
+  Course: PsychMetHCI - Statistical Methods in Human-Computer Interaction
+  Lesson: Bayesian_Link_Functions
+  Author: Robin Welsch & Tapio Tuloisela
+  Type: Standard
+  Organization: Aalto University
+  Version: 4.0.0
+
+#1
+- Class: script
+  Output: To save the notes for this module, copy and paste the code provided into your own RNotebook. Type submit() when you have finished saving these notes.
+  AnswerTests: script_results_identical('saved')
+  Hint: "Don't change anything, just type submit(). If you did and you don't know how to fix it, just type skip(), and you'll be all set."
+  Script: Notes.R
+
+#2
+- Class: text
+  Output: "So far our brms models have assumed a normal (Gaussian) outcome. But HCI data is often non-normal: binary outcomes (did the user complete the task?), counts (how many times did they open the app?), and ordinal scales (Likert ratings). Link functions let us model these outcomes appropriately."
+
+#3
+- Class: text
+  Output: "App developers tested whether gamification features improve engagement with a fitness app. 180 participants used either a gamified or standard version for 2 weeks. Three outcomes were measured: whether they were still using the app after 2 weeks (retained), average daily app opens, and satisfaction rating (1-5 Likert scale)."
+
+#4
+- Class: cmd_question
+  Output: Let's look at the data. Type engagement |> head() to see the first few rows.
+  CorrectAnswer: engagement |> head()
+  AnswerTests: omnitest(correctExpr='engagement |> head()')
+  Hint: Try engagement |> head()
+
+#5
+- Class: cmd_question
+  Output: "Let's get descriptive statistics by condition. Pipe engagement into group_by(condition), then summarise() with retention = mean(retained), avg_opens = mean(daily_opens), and avg_satisfaction = mean(satisfaction)."
+  CorrectAnswer: engagement |> group_by(condition) |> summarise(retention = mean(retained), avg_opens = mean(daily_opens), avg_satisfaction = mean(satisfaction))
+  AnswerTests: omnitest(correctExpr='engagement |> group_by(condition) |> summarise(retention = mean(retained), avg_opens = mean(daily_opens), avg_satisfaction = mean(satisfaction))')
+  Hint: Try engagement |> group_by(condition) |> summarise(retention = mean(retained), avg_opens = mean(daily_opens), avg_satisfaction = mean(satisfaction))
+
+#6
+- Class: text
+  Output: "Part 1: Logistic Regression for Binary Outcomes. When the outcome is binary (0 or 1), we use logistic regression. The link function is the logit -- it transforms a probability (bounded between 0 and 1) to the log-odds scale (unbounded), allowing a linear model on the transformed scale."
+
+#7
+- Class: text
+  Output: "Recall from the Regression module: in frequentist glm(), we use family = binomial. In brms, we use family = bernoulli() for binary outcomes. The bernoulli family automatically applies the logit link function."
+
+#8
+- Class: cmd_question
+  Output: "Let's fit a Bayesian logistic regression predicting retention from condition. Type fit_logistic <- brm(retained ~ condition, data = engagement, family = bernoulli(), seed = 42, silent = 2, refresh = 0)"
+  CorrectAnswer: fit_logistic <- brm(retained ~ condition, data = engagement, family = bernoulli(), seed = 42, silent = 2, refresh = 0)
+  AnswerTests: omnitest(correctExpr='fit_logistic <- brm(retained ~ condition, data = engagement, family = bernoulli(), seed = 42, silent = 2, refresh = 0)')
+  Hint: Try fit_logistic <- brm(retained ~ condition, data = engagement, family = bernoulli(), seed = 42, silent = 2, refresh = 0)
+
+#9
+- Class: cmd_question
+  Output: "Let's see the model summary. The coefficients are on the log-odds scale. Type summary(fit_logistic)"
+  CorrectAnswer: summary(fit_logistic)
+  AnswerTests: omnitest(correctExpr='summary(fit_logistic)')
+  Hint: Try summary(fit_logistic)
+
+#10
+- Class: cmd_question
+  Output: "To interpret the coefficients as odds ratios, we exponentiate them. Type fixef(fit_logistic) |> exp()"
+  CorrectAnswer: fixef(fit_logistic) |> exp()
+  AnswerTests: omnitest(correctExpr='fixef(fit_logistic) |> exp()')
+  Hint: Try fixef(fit_logistic) |> exp()
+
+#11
+- Class: mult_question
+  Output: "In logistic regression, the link function transforms..."
+  AnswerChoices: The probability to the log-odds scale;The outcome to be normal;The predictor to be binary;The prior to the posterior
+  CorrectAnswer: The probability to the log-odds scale
+  AnswerTests: omnitest(correctVal='The probability to the log-odds scale')
+  Hint: The logit link maps probabilities (0 to 1) to the entire real number line via log-odds.
+
+#12
+- Class: text
+  Output: "Part 2: Poisson Regression for Count Outcomes. When the outcome is a count (non-negative integers), we use Poisson regression. The link function is the log -- it transforms the expected count (which must be positive) to the log scale (unbounded), allowing a linear model."
+
+#13
+- Class: cmd_question
+  Output: "Let's fit a Bayesian Poisson regression predicting daily app opens from condition. Type fit_poisson <- brm(daily_opens ~ condition, data = engagement, family = poisson(), seed = 42, silent = 2, refresh = 0)"
+  CorrectAnswer: fit_poisson <- brm(daily_opens ~ condition, data = engagement, family = poisson(), seed = 42, silent = 2, refresh = 0)
+  AnswerTests: omnitest(correctExpr='fit_poisson <- brm(daily_opens ~ condition, data = engagement, family = poisson(), seed = 42, silent = 2, refresh = 0)')
+  Hint: Try fit_poisson <- brm(daily_opens ~ condition, data = engagement, family = poisson(), seed = 42, silent = 2, refresh = 0)
+
+#14
+- Class: cmd_question
+  Output: "Let's see the model summary. The coefficients are on the log scale. Type summary(fit_poisson)"
+  CorrectAnswer: summary(fit_poisson)
+  AnswerTests: omnitest(correctExpr='summary(fit_poisson)')
+  Hint: Try summary(fit_poisson)
+
+#15
+- Class: cmd_question
+  Output: "For Poisson regression, exponentiating the coefficients gives rate ratios -- the multiplicative change in expected count. Type fixef(fit_poisson) |> exp()"
+  CorrectAnswer: fixef(fit_poisson) |> exp()
+  AnswerTests: omnitest(correctExpr='fixef(fit_poisson) |> exp()')
+  Hint: Try fixef(fit_poisson) |> exp()
+
+#16
+- Class: mult_question
+  Output: "For Poisson regression, exponentiating the coefficient gives..."
+  AnswerChoices: The rate ratio -- multiplicative change in expected count;The odds ratio;The probability;The raw count difference
+  CorrectAnswer: The rate ratio -- multiplicative change in expected count
+  AnswerTests: omnitest(correctVal='The rate ratio -- multiplicative change in expected count')
+  Hint: The log link means coefficients are on the log scale. Exponentiating gives a multiplicative (ratio) effect.
+
+#17
+- Class: text
+  Output: "A key assumption of Poisson regression is that the mean equals the variance (equidispersion). In practice, count data often has variance greater than the mean -- this is called overdispersion. When overdispersion is present, the negative binomial family is preferred because it adds a dispersion parameter."
+
+#18
+- Class: cmd_question
+  Output: "Let's fit a negative binomial model for comparison. Type fit_negbin <- brm(daily_opens ~ condition, data = engagement, family = negbinomial(), seed = 42, silent = 2, refresh = 0)"
+  CorrectAnswer: fit_negbin <- brm(daily_opens ~ condition, data = engagement, family = negbinomial(), seed = 42, silent = 2, refresh = 0)
+  AnswerTests: omnitest(correctExpr='fit_negbin <- brm(daily_opens ~ condition, data = engagement, family = negbinomial(), seed = 42, silent = 2, refresh = 0)')
+  Hint: Try fit_negbin <- brm(daily_opens ~ condition, data = engagement, family = negbinomial(), seed = 42, silent = 2, refresh = 0)
+
+#19
+- Class: cmd_question
+  Output: "Now let's compare the Poisson and negative binomial models using LOO (leave-one-out) cross-validation. Type fit_poisson <- add_criterion(fit_poisson, \"loo\"); fit_negbin <- add_criterion(fit_negbin, \"loo\"); loo_compare(fit_poisson, fit_negbin)"
+  CorrectAnswer: fit_poisson <- add_criterion(fit_poisson, "loo"); fit_negbin <- add_criterion(fit_negbin, "loo"); loo_compare(fit_poisson, fit_negbin)
+  AnswerTests: omnitest(correctExpr='fit_poisson <- add_criterion(fit_poisson, "loo"); fit_negbin <- add_criterion(fit_negbin, "loo"); loo_compare(fit_poisson, fit_negbin)')
+  Hint: "Try fit_poisson <- add_criterion(fit_poisson, \"loo\"); fit_negbin <- add_criterion(fit_negbin, \"loo\"); loo_compare(fit_poisson, fit_negbin)"
+
+#20
+- Class: text
+  Output: "Part 3: Ordinal Regression for Ordered Categories. Likert scale ratings (e.g., 1-5) are ordered but not necessarily equally spaced. Ordinal regression with the cumulative logit link models the probability of being at or below each category. In brms, we use family = cumulative(\"logit\")."
+
+#21
+- Class: cmd_question
+  Output: "First, we need to convert satisfaction to an ordered factor. Type engagement$satisfaction <- factor(engagement$satisfaction, ordered = TRUE)"
+  CorrectAnswer: engagement$satisfaction <- factor(engagement$satisfaction, ordered = TRUE)
+  AnswerTests: omnitest(correctExpr='engagement$satisfaction <- factor(engagement$satisfaction, ordered = TRUE)')
+  Hint: Try engagement$satisfaction <- factor(engagement$satisfaction, ordered = TRUE)
+
+#22
+- Class: cmd_question
+  Output: "Now let's fit a Bayesian ordinal regression. Type fit_ordinal <- brm(satisfaction ~ condition, data = engagement, family = cumulative(\"logit\"), seed = 42, silent = 2, refresh = 0)"
+  CorrectAnswer: fit_ordinal <- brm(satisfaction ~ condition, data = engagement, family = cumulative("logit"), seed = 42, silent = 2, refresh = 0)
+  AnswerTests: omnitest(correctExpr='fit_ordinal <- brm(satisfaction ~ condition, data = engagement, family = cumulative("logit"), seed = 42, silent = 2, refresh = 0)')
+  Hint: "Try fit_ordinal <- brm(satisfaction ~ condition, data = engagement, family = cumulative(\"logit\"), seed = 42, silent = 2, refresh = 0)"
+
+#23
+- Class: cmd_question
+  Output: "Let's see the ordinal model summary. Notice the threshold (Intercept) parameters -- these are the cutpoints between adjacent categories on the latent scale. Type summary(fit_ordinal)"
+  CorrectAnswer: summary(fit_ordinal)
+  AnswerTests: omnitest(correctExpr='summary(fit_ordinal)')
+  Hint: Try summary(fit_ordinal)
+
+#24
+- Class: mult_question
+  Output: "Which family would you use in brms for a Likert scale outcome (1-7)?"
+  AnswerChoices: cumulative() for ordinal regression;gaussian() for normal regression;bernoulli() for logistic regression;poisson() for count regression
+  CorrectAnswer: cumulative() for ordinal regression
+  AnswerTests: omnitest(correctVal='cumulative() for ordinal regression')
+  Hint: Likert scales are ordered categories, which calls for ordinal regression.
+
+#25
+- Class: mult_question
+  Output: "Why might negative binomial be preferred over Poisson for count data?"
+  AnswerChoices: It can handle overdispersion where variance exceeds the mean;It is always more accurate;It does not require a link function;It works with binary data too
+  CorrectAnswer: It can handle overdispersion where variance exceeds the mean
+  AnswerTests: omnitest(correctVal='It can handle overdispersion where variance exceeds the mean')
+  Hint: Think about the key assumption of Poisson regression (mean = variance) and what happens when it is violated.

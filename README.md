@@ -3,7 +3,7 @@
 
 This course - Psychological Statistics You Can Handle (PSYCH) - is meant to be paired with an Undergraduate Research Methods or Statistics course, with notes that could serve up to early career graduate students. It is meant to help teach students basic statistics using R in an interactive framework. We take open data and replicate the results (or discuss why sometimes we cannot replicate the results). Students interact with many packages throughout this course, with the main ones being the tidyverse (dplyr, tidyr, purrr, ggplot2), rstatix, and emmeans. 
 
-This course does not cover Baysian Statistics.
+This course now includes modules on Bayesian Statistics, covering topics from Bayesian A/B testing and posterior distributions through Bayesian regression with brms, hierarchical models, and cognitive modelling. The Bayesian modules use the BayesFactor and brms packages. Students will need a working C++ toolchain (Rtools on Windows, Xcode CLI on Mac, g++ on Linux) for the brms modules.
 
 This course was supported through the Society for the Improvement of Psychological Science (SIPS) Grants-In-Aid to Reduce Barriers to Improving Psychological Science.
 

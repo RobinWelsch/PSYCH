@@ -1,0 +1,4 @@
+swirl
+dplyr
+ggplot2
+BayesFactor

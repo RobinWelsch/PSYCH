@@ -1,0 +1,106 @@
+- Class: meta
+  Course: PsychMetHCI - Statistical Methods in Human-Computer Interaction
+  Lesson: Installing_brms_and_Stan
+  Author: Robin Welsch & Tapio Tuloisela
+  Type: Standard
+  Organization: Aalto University
+  Version: 4.0.0
+
+#1
+- Class: script
+  Output: "To save the notes for this module, copy and paste the code provided into your own RNotebook. Type submit() when you have finished saving these notes."
+  AnswerTests: script_results_identical('saved')
+  Hint: "Don't change anything, just type submit(). If you did and you don't know how to fix it, just type skip(), and you'll be all set."
+  Script: Notes.R
+
+#2
+- Class: text
+  Output: "We're about to enter the world of brms -- a powerful R package for Bayesian regression. But brms requires a C++ compiler and the Stan probabilistic programming language under the hood."
+
+#3
+- Class: text
+  Output: "What is Stan? Stan is a state-of-the-art platform for statistical modeling. When you write brm() in R, brms translates your model into Stan code, which gets compiled to C++ for fast sampling."
+
+#4
+- Class: text
+  Output: "The installation has three parts: (1) a C++ toolchain, (2) the rstan package, and (3) the brms package itself."
+
+#5
+- Class: text
+  Output: "Platform-specific instructions: Windows needs Rtools, Mac needs Xcode CLI Tools, Linux needs g++. Make sure the appropriate toolchain is installed for your operating system before proceeding."
+
+#6
+- Class: mult_question
+  Output: "Why does brms need a C++ compiler?"
+  AnswerChoices: Because Stan models are compiled to C++ for fast execution;Because R cannot do Bayesian statistics natively;Because C++ is more accurate than R;Because brms is written in C++
+  CorrectAnswer: Because Stan models are compiled to C++ for fast execution
+  AnswerTests: omnitest(correctVal='Because Stan models are compiled to C++ for fast execution')
+  Hint: Think about what Stan does with your model code before it can run.
+
+#7
+- Class: text
+  Output: "If you haven't already, install rstan and brms. You can run install.packages('rstan') and install.packages('brms') in your R console. These may take several minutes to download and compile."
+
+#8
+- Class: cmd_question
+  Output: "Let's load rstan to check that your Stan installation is working. Type library(rstan)"
+  CorrectAnswer: library(rstan)
+  AnswerTests: omnitest(correctExpr='library(rstan)')
+  Hint: Type library(rstan)
+
+#9
+- Class: text
+  Output: "If that loaded without errors, your Stan installation is working. If you saw errors, you may need to revisit the C++ toolchain installation for your platform."
+
+#10
+- Class: cmd_question
+  Output: "Now let's load brms. Type library(brms)"
+  CorrectAnswer: library(brms)
+  AnswerTests: omnitest(correctExpr='library(brms)')
+  Hint: Type library(brms)
+
+#11
+- Class: text
+  Output: "Let's run a very simple test model to make sure everything compiles. We'll use the built-in mtcars dataset and predict miles per gallon (mpg) from car weight (wt). This will take a moment as Stan compiles the model for the first time."
+
+#12
+- Class: cmd_question
+  Output: "Run a simple brms model. Type test_fit <- brm(mpg ~ wt, data = mtcars, seed = 42, silent = 2, refresh = 0)"
+  CorrectAnswer: test_fit <- brm(mpg ~ wt, data = mtcars, seed = 42, silent = 2, refresh = 0)
+  AnswerTests: omnitest(correctExpr='test_fit <- brm(mpg ~ wt, data = mtcars, seed = 42, silent = 2, refresh = 0)')
+  Hint: Type test_fit <- brm(mpg ~ wt, data = mtcars, seed = 42, silent = 2, refresh = 0)
+
+#13
+- Class: text
+  Output: "If that ran without errors, congratulations -- your brms/Stan setup is working correctly! The silent = 2 and refresh = 0 arguments simply suppressed the verbose sampling output."
+
+#14
+- Class: cmd_question
+  Output: "Let's look at the model output. Type summary(test_fit)"
+  CorrectAnswer: summary(test_fit)
+  AnswerTests: omnitest(correctExpr='summary(test_fit)')
+  Hint: Type summary(test_fit)
+
+#15
+- Class: text
+  Output: "Take a look at the output. Under Population-Level Effects you'll see the regression coefficients -- an Intercept and a slope for wt. The Estimate column gives the posterior mean, and the l-95% CI and u-95% CI columns give the 95% credible interval. Rhat and Bulk_ESS/Tail_ESS are convergence diagnostics that we'll explain in the next module."
+
+#16
+- Class: mult_question
+  Output: "What happens the first time you run a brms model?"
+  AnswerChoices: Stan compiles the model to C++ which takes extra time;The model runs instantly;R downloads the model from the internet;Nothing special -- it is the same as lm()
+  CorrectAnswer: Stan compiles the model to C++ which takes extra time
+  AnswerTests: omnitest(correctVal='Stan compiles the model to C++ which takes extra time')
+  Hint: Remember what we said about brms translating models into Stan code that gets compiled.
+
+#17
+- Class: mult_question
+  Output: "Which of the following is NOT part of the brms/Stan toolchain?"
+  AnswerChoices: A Python interpreter;A C++ compiler;The rstan package;The brms package
+  CorrectAnswer: A Python interpreter
+  AnswerTests: omnitest(correctVal='A Python interpreter')
+  Hint: "We mentioned three parts: a C++ toolchain, rstan, and brms. Which option was never mentioned?"
+
+#18
+- Class: text
+  Output: "Great! You're all set up for Bayesian regression with brms. In the next module, we'll dive into building and interpreting Bayesian regression models in detail."
