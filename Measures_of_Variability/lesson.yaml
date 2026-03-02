@@ -48,12 +48,14 @@
   AnswerChoices: 25.03;504;188.58;24;8;520
   CorrectAnswer: 25.03
   AnswerTests: omnitest(correctVal='25.03')
+  Hint: "The answer is 25.03."
 
 - Class: mult_question
   Output: "Great! And what's the minimum and maximum values that were used to calculate this range?"
   AnswerChoices: 8 and 504; 1 and 2; 179.9 and 182.36; 6.64 and 31.67
   CorrectAnswer: 6.64 and 31.67
   AnswerTests: omnitest(correctVal='6.64 and 31.67')
+  Hint: "The answer is 6.64 and 31.67."
 
 - Class: cmd_question
   Output: "We can expand this a little bit. Press the up arrow to get back psych::describeBy(data), and add a second argument, group=data$Year."
@@ -169,25 +171,29 @@
   Hint: You should be creating a new variable, xbar, and in it, storing (Xi + Xi2 + Xi3+ Xi4+ Xi5)/n, where Xi is each observation, and n is the number of observations.
 
 - Class: cmd_question
-  Output: View the mean now by typing xbar. 
+  Output: View the mean now by typing xbar.
   CorrectAnswer: xbar
   AnswerTests: omnitest(correctExpr='xbar')
+  Hint: "Try typing: xbar"
 
 - Class: cmd_question
   Output: "The next thing we need to do is add up each difference of our values subtracting the mean, and then squaring that term. We will store that in a variable called summation. I'll give you a hint - it should look something like summation <- ((512-159.6)^2+(89-...))."
   CorrectAnswer: summation <- 160489.2
   AnswerTests: expr_creates_var('summation'); omnitest(correctVal=160489.2)
+  Hint: "Try typing: summation <- ((512-159.6)^2+(89-159.6)^2+(..each value..-159.6)^2) for all five observations."
 
 #40
 - Class: cmd_question
   Output: View the summation of squared deviations from the mean now by typing summation.
   CorrectAnswer: summation
   AnswerTests: omnitest(correctExpr='summation')
+  Hint: "Try typing: summation"
 
 - Class: cmd_question
   Output: "Now, we want to divide summation by n-1 and store it as a new variable, variance."
   CorrectAnswer: variance <- summation/4
   AnswerTests: expr_creates_var('variance'); omnitest(correctVal=40122.3)
+  Hint: "Try typing: variance <- summation/4"
 
 - Class: cmd_question
   Output: "Finally, let's take the square root of variance by the sqrt() function, and store it as standarddeviation."
@@ -199,11 +205,13 @@
   Output: View the final answer by typing standarddeviation.
   CorrectAnswer: standarddeviation
   AnswerTests: omnitest(correctExpr='standarddeviation')
+  Hint: "Try typing: standarddeviation"
 
 - Class: cmd_question
   Output: And of course, like everything, there is a command that does all of this for us. Using the sd() function, pass it a single argument, calculate_me.
   CorrectAnswer: sd(calculate_me)
   AnswerTests: omnitest(correctExpr='sd(calculate_me)')
+  Hint: "Try typing: sd(calculate_me)"
 
 - Class: text
   Output: Finally, what you might be saying is, okay, great, I can calculate this formula. But I still have no idea what it means.
@@ -212,12 +220,13 @@
   Output: Fair point! Well, I've loaded a graph that can provide the first visual example to what standard deviation is. 
 
 - Class: cmd_question
-  Output: Let's imagine we have this test. On average, women scored an 8, while men scored a 4. Type example now. 
+  Output: Let's imagine we have this test. On average, women scored an 8, while men scored a 4. Type example now.
   CorrectAnswer: example
   AnswerTests: omnitest(correctExpr='example')
+  Hint: "Try typing: example"
 
 - Class: text
-  Output: On the left, we see what this data might look like if we have high standard deviations. On the right, we have what it might look like with low standard deviations. 
+  Output: On the left, we see what this data might look like if we have high standard deviations. On the right, we have what it might look like with low standard deviations.
 
 - Class: mult_question
   Output: If you had to guess, which pair of data would be statistically different from each other?

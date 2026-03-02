@@ -35,6 +35,7 @@
   Output: "Let's visualize how many individuals we have at each position in our dataset. We'll make another histogram. \n\n Type the following: ggplot(data=baseball, aes(x=pos))+geom_histogram(stat=\"count\")"
   CorrectAnswer: ggplot(data=baseball, aes(x=pos))+geom_histogram(stat="count")
   AnswerTests: omnitest(correctExpr='ggplot(data=baseball, aes(x=pos))+geom_histogram(stat=\"count\")')
+  Hint: "Try typing: ggplot(data=baseball, aes(x=pos))+geom_histogram(stat=\"count\")"
 
 #8
 - Class: mult_question
@@ -42,6 +43,7 @@
   AnswerChoices: 1B;2B;DH;OF;P
   CorrectAnswer: P
   AnswerTests: omnitest(correctVal='P')
+  Hint: "The answer is P. Look at the tallest bar in the histogram."
 
 #9
 - Class: text
@@ -68,6 +70,7 @@
   Output: "For example, let's look at a bimodal distribution that was published. Type plot(bimodal). I have recreated an estimate of their original graph - but the point is in the visual, not in its preciseness (read the article for the true values!).  \n\n Sullivan, R. (2005). The age pattern of first-birth rates among us women the binmodal 1990s. Demography, 42(2), 259-273."
   CorrectAnswer: plot(bimodal)
   AnswerTests: omnitest(correctExpr='plot(bimodal)')
+  Hint: "Try typing: plot(bimodal)"
 
 #15
 - Class: text
@@ -87,6 +90,7 @@
   AnswerChoices: 1;2;3;4;5
   CorrectAnswer: 3
   AnswerTests: omnitest(correctVal='3')
+  Hint: "The answer is 3. The median is the middle value when the numbers are sorted."
 
 #19
 - Class: mult_question
@@ -105,6 +109,7 @@
   Output: "Let's look at the median number of at bats between these two teams. We'll use the function sort(), and pass it one argument, baseball$atbats."
   CorrectAnswer: sort(baseball$atbats)
   AnswerTests: omnitest(correctExpr='sort(baseball$atbats)')
+  Hint: "Try typing: sort(baseball$atbats)"
 
 #22
 - Class: mult_question
@@ -112,6 +117,7 @@
   AnswerChoices: 1 and 40; 21 and 22; 22 and 23; 22 and 24
   CorrectAnswer: 22 and 23
   AnswerTests: omnitest(correctVal='22 and 23')
+  Hint: "The answer is 22 and 23. With 44 observations, the two middle positions are 44/2 and 44/2 + 1."
 
 #23
 - Class: mult_question
@@ -119,24 +125,28 @@
   AnswerChoices: 69.5;80;65;68
   CorrectAnswer: 69.5
   AnswerTests: omnitest(correctVal='69.5')
+  Hint: "The answer is 69.5. Average the 22nd and 23rd values in the sorted list."
 
 #24
 - Class: cmd_question
   Output: "There's two other ways we can look at this. The simplest is just passing baseball$atbats to the function median(). Do that now."
   CorrectAnswer: median(baseball$atbats)
   AnswerTests: omnitest(correctExpr='median(baseball$atbats)')
+  Hint: "Try typing: median(baseball$atbats)"
 
 #25
 - Class: cmd_question
   Output: "And, finally, let's take a step by step look at something called a cumulative frequency distribution. We're going to plot a new graph. Type ggplot(baseball, aes(atbats)) + stat_ecdf(geom = \"point\")"
   CorrectAnswer: ggplot(baseball, aes(atbats)) + stat_ecdf(geom = "point")
   AnswerTests: omnitest(correctExpr='ggplot(baseball, aes(atbats)) + stat_ecdf(geom = "point")')
+  Hint: "Try typing: ggplot(baseball, aes(atbats)) + stat_ecdf(geom = \"point\")"
 
 #26
 - Class: cmd_question
   Output: "Now push the up arrow so we can get back what we just typed. At the end of the command we just typed, write + geom_vline(xintercept=69.5) + geom_hline(yintercept=.50)"
   CorrectAnswer: ggplot(baseball, aes(atbats)) + stat_ecdf(geom = "point") + geom_vline(xintercept=69.5) + geom_hline(yintercept=.50)
   AnswerTests: omnitest(correctExpr='ggplot(baseball, aes(atbats)) + stat_ecdf(geom = "point") + geom_vline(xintercept=69.5) + geom_hline(yintercept=.50)')
+  Hint: "Try typing: ggplot(baseball, aes(atbats)) + stat_ecdf(geom = \"point\") + geom_vline(xintercept=69.5) + geom_hline(yintercept=.50)"
 
 #27
 - Class: text
@@ -160,6 +170,7 @@
   AnswerChoices: Lower;Higher;Equal to
   CorrectAnswer: Higher
   AnswerTests: omnitest(correctVal='Higher')
+  Hint: "The answer is Higher. The mode is the most common value, which is in the cluster of low values on the left. The median is the 50th percentile, which would be pulled toward the center."
 
 #32
 - Class: mult_question
@@ -167,12 +178,14 @@
   AnswerChoices: Lower;Higher;Equal to
   CorrectAnswer: Lower
   AnswerTests: omnitest(correctVal='Lower')
+  Hint: "The answer is Lower. The mean is sensitive to outliers and gets pulled toward the extreme high values, making it larger than the median."
 
 #33
 - Class: cmd_question
   Output: "I've visualized this for you. Type mean_median_mode now."
   CorrectAnswer: mean_median_mode
   AnswerTests: omnitest(correctExpr='mean_median_mode')
+  Hint: "Try typing: mean_median_mode"
 
 #34
 - Class: text
@@ -207,6 +220,7 @@
   Output: "I've loaded a graph to look at the three kinds of skews. Type example into the Console now."
   CorrectAnswer: example
   AnswerTests: omnitest(correctExpr='example')
+  Hint: "Try typing: example"
 
 #42
 - Class: mult_question
@@ -214,6 +228,7 @@
   AnswerChoices: Positive Skew;Negative Skew;No Skew
   CorrectAnswer: Negative Skew
   AnswerTests: omnitest(correctVal='Negative Skew')
+  Hint: "The answer is Negative Skew. When outliers are on the left side, the mean is pulled negatively away from the median."
 
 #43
 - Class: mult_question
@@ -221,6 +236,7 @@
   AnswerChoices: Positive Skew;Negative Skew;No Skew
   CorrectAnswer: Positive Skew
   AnswerTests: omnitest(correctVal='Positive Skew')
+  Hint: "The answer is Positive Skew. When outliers are on the right side, the mean is pulled positively away from the median."
 
 #44
 - Class: mult_question
@@ -228,6 +244,7 @@
   AnswerChoices: Positive Skew;Negative Skew;No Skew
   CorrectAnswer: No Skew
   AnswerTests: omnitest(correctVal='No Skew')
+  Hint: "The answer is No Skew. When values are equally distributed, the mean equals the median and there is no skew."
 
 #45
 - Class: text
@@ -242,18 +259,21 @@
   Output: "There is a list of numbers taken from our dataset stored in your Environment under sample_double. Type sample_double into the Console now to view it."
   CorrectAnswer: sample_double
   AnswerTests: omnitest(correctExpr='sample_double')
+  Hint: "Try typing: sample_double"
 
 #48
 - Class: cmd_question
   Output: "Add all five of these values up and then divide by the number of values. Your output in the console should be the average."
   CorrectAnswer: 17.8
   AnswerTests: omnitest(correctVal=17.8)
+  Hint: "Add all five values together and divide by 5. The answer should be 17.8."
 
 #49
 - Class: cmd_question
   Output: "There is of course also an function we can use to get the same answer. Pass sample_double into the function mean() now."
   CorrectAnswer: mean(sample_double)
   AnswerTests: omnitest(correctExpr='mean(sample_double)')
+  Hint: "Try typing: mean(sample_double)"
 
 #50 - Mode
 - Class: mult_question

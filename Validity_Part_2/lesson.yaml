@@ -138,3 +138,4 @@
   AnswerChoices: Is our class representative of all justice classes?;Was our local sample representative of the greater population?;Were people walking on the street the best representative sample of drivers?;All of the choices
   CorrectAnswer: All of the choices
   AnswerTests: omnitest(correctVal="All of the choices")
+  Hint: "The answer is All of the choices."

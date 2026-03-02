@@ -27,7 +27,7 @@
 
 #5
 - Class: text
-  Output: We've loaded data in your environment called gamesdf. Wylie & Gantman (2023) wanted to know if people will enforce broken, rarely enforced rules (for example, jaywalking). \n\n To do this, they created what they call the Sharing Game, with an “Allocator” who decides how much of the given 5 points (1 point translates to $0.05) to split between themselves and the Receiver. An Observer decides whether the entire game was valid or invalid (akin to an umpire or referee). Both the Allocator and the Receiver are pre-programmed into the game set-up, making the Observer the only real participant playing the game.  
+  Output: “We've loaded data in your environment called gamesdf. Wylie & Gantman (2023) wanted to know if people will enforce broken, rarely enforced rules (for example, jaywalking).\n\nTo do this, they created what they call the Sharing Game, with an \”Allocator\” who decides how much of the given 5 points (1 point translates to $0.05) to split between themselves and the Receiver. An Observer decides whether the entire game was valid or invalid (akin to an umpire or referee). Both the Allocator and the Receiver are pre-programmed into the game set-up, making the Observer the only real participant playing the game.”
 
 #6
 - Class: text
@@ -88,7 +88,7 @@
   Output: Since the scale is from 1-7, you might realize that this sentence sounds pretty meaningless. And indeed, many times interpreting the bare intercept is (What does age=0 even mean?). Many times, we will actually center our explanatory variables that are non-factors in order to make the intercept more interpretable.
 
 - Class: text
-  Output: Importantly, if done correctly, the only thing that will change is the (Intercept) estimate - centering variables has no effect on the estiamte of itself or on any other variable within the model (but it may decrease the standard error). 
+  Output: Importantly, if done correctly, the only thing that will change is the (Intercept) estimate - centering variables has no effect on the estimate of itself or on any other variable within the model (but it may decrease the standard error). 
   
 - Class: text
   Output: You can also add interaction terms (sometimes called moderation terms) into the formula.

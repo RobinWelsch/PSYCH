@@ -177,6 +177,7 @@
   AnswerChoices: At least one manipulated independent variable;Randomly assign participants to their conditions;Attempts to hold all else constant;All of the choices
   CorrectAnswer: All of the choices
   AnswerTests: omnitest(correctVal="All of the choices")
+  Hint: "The answer is All of the choices."
 
 - Class: text
   Output: Great! Let's review.
@@ -186,23 +187,27 @@
   AnswerChoices: Naturalistic Observation;Case Study Research;Logical Research;Correlational Research;Between-Groups Research;Experimental Research
   CorrectAnswer: Between-Groups Research
   AnswerTests: omnitest(correctVal="Between-Groups Research")
+  Hint: "The answer is Between-Groups Research."
 
 - Class: mult_question
   Output: Researchers hypothesize that increased usability of an interface is related to higher levels of user engagement. They recruit 100 participants and have them use an interface while collecting data on usability ratings and engagement metrics.
   AnswerChoices: Naturalistic Observation;Case Study Research;Logical Research;Correlational Research;Between-Groups Research;Experimental Research
   CorrectAnswer: Correlational Research
   AnswerTests: omnitest(correctVal="Correlational Research")
+  Hint: "The answer is Correlational Research."
 
 - Class: mult_question
   Output: A new interactive learning tool is introduced in a university setting. Researchers observe students during class sessions and in informal study groups, taking detailed notes on their interactions with the tool.
   AnswerChoices: Naturalistic Observation;Case Study Research;Logical Research;Correlational Research;Between-Groups Research;Experimental Research
   CorrectAnswer: Naturalistic Observation
   AnswerTests: omnitest(correctVal="Naturalistic Observation")
+  Hint: "The answer is Naturalistic Observation."
 
 - Class: mult_question
   Output: Researchers hypothesize that users who are primed with a warning about cybersecurity risks will be more likely to follow secure practices. Participants are randomly assigned to either receive a warning message before using a new online platform or receive no warning, and their adherence to security guidelines is then assessed.
   AnswerChoices: Naturalistic Observation;Case Study Research;Logical Research;Correlational Research;Between-Groups Research;Experimental Research
   CorrectAnswer: Experimental Research
   AnswerTests: omnitest(correctVal="Experimental Research")
+  Hint: "The answer is Experimental Research."
 
-  
+

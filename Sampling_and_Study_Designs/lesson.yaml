@@ -80,6 +80,7 @@
   AnswerChoices: Group membership;Amount of dots seen; Amount of money shared; Hair color
   CorrectAnswer: Group membership
   AnswerTests: omnitest(correctVal='Group membership')
+  Hint: "The answer is Group membership."
 
 - Class: text
   Output: Between-Subjects Designs are typically done one of two ways. We can either do a Post-Test, or a Pre Test v Post Test. 

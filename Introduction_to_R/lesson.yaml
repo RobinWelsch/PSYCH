@@ -325,6 +325,7 @@
   AnswerChoices: View();str();mean();install.packages()
   CorrectAnswer: str()
   AnswerTests: omnitest(correctVal="str()")
+  Hint: "The function is str()."
 
 #57
 - Class: text

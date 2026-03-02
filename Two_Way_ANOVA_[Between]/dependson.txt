@@ -1,5 +1,4 @@
 swirl
-swirlify
 ggplot2
 rstatix
 dplyr
