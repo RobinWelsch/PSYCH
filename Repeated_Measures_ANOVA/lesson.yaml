@@ -27,7 +27,7 @@
 
 #11
 - Class: text
-  Output: "(7) All subjects are measured at all time intervals, with no missing, not at random. \n\n (8) Response variables generally must be categorical."
+  Output: "(7) All subjects are measured at all time intervals, with no missing, not at random. \n\n (8) Factor variables (independent variables) generally must be categorical."
 
 #12
 - Class: text
@@ -50,7 +50,7 @@
 
 #17
 - Class: text
-  Output: "We can see that there are four columns. One, ReponseId, reflects an anonymous tag of the participant. We can see that each participant is observed six times, because there are six rows for each ResponseId. This is called the long data format, and is the best way to have the data set up since each row reflects one observation of one person."
+  Output: "We can see that there are four columns. One, ResponseId, reflects an anonymous tag of the participant. We can see that each participant is observed six times, because there are six rows for each ResponseId. This is called the long data format, and is the best way to have the data set up since each row reflects one observation of one person."
 
 #18
 - Class: text
@@ -83,7 +83,7 @@
 
 #23
 - Class: cmd_question
-  Output: "We can also do this using rstatix. Hit up on your console. Where you had shapiro_wilk(PWH), change that to identify_outliers(PWH)."
+  Output: "We can also do this using rstatix. Hit up on your console. Where you had shapiro_test(PWH), change that to identify_outliers(PWH)."
   CorrectAnswer: HeymanLong |> group_by(PayLevel, PayForm) |> identify_outliers(PWH)
   AnswerTests: omnitest(correctExpr='HeymanLong |> group_by(PayLevel, PayForm) |> identify_outliers(PWH)')
   Hint: HeymanLong |> group_by(PayLevel, PayForm) |> identify_outliers(PWH)
@@ -173,7 +173,7 @@
   Hint: Write pwh_anova now.
 
 - Class: text
-  Output: "The authors write - We found a large effect for the payment form, F(1.76, 1752.33) = 161.56, p .001, η2p  = .14, 90% CI [.12, .16]. The main effect of the payment level was also large,  F(1, 998) = 1679.32, p .001, η2p  = .63, 90% CI [.60, .65]. Finally, we found an interaction effect,   F(1.90, 1900.34) = 428.58, p .001, η2p  = .30, 90% CI [.27, .33], supporting H1."
+  Output: "The authors write - We found a large effect for the payment form, F(1.76, 1752.33) = 161.56, p < .001, η2p  = .14, 90% CI [.12, .16]. The main effect of the payment level was also large,  F(1, 998) = 1679.32, p < .001, η2p  = .63, 90% CI [.60, .65]. Finally, we found an interaction effect,   F(1.90, 1900.34) = 428.58, p < .001, η2p  = .30, 90% CI [.27, .33], supporting H1."
 
 - Class: text
   Output: "We've gotten most of that! The only part we haven't been able to get yet is the partial eta squared reported (that n2p = .14) and the 90% CI of the partial eta squared."
