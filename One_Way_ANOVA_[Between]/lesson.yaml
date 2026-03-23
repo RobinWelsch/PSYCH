@@ -19,7 +19,7 @@
   Output: This risks inflating our Type I error rate and finding significant differences when the truth is that they are not different. An ANOVA is an omnibus test - it asks, "Is there differences between these groups?" without stating where those differences lie. 
 
 - Class: text
-  Output: "We are going to analyze data published on Psychological Science. This study aimed to determine how much Soloman's paradox holds true: do we reason more about other individuals' problems than our own?"
+  Output: "We are going to analyze data published on Psychological Science. This study aimed to determine how much Solomon's paradox holds true: do we reason more about other individuals' problems than our own?"
   
 - Class: text
   Output: "The citation is Grossmann, I., & Kross, E. (2014). Exploring Solomon’s Paradox- Self-Distancing Eliminates the Self-Other Asymmetry in Wise Reasoning About Close Relationships in Younger and Older Adults. Psychological Science, 25(8), 1571–1580. doi.org/10.1177/0956797614535400"
