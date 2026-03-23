@@ -1,0 +1,321 @@
+- Class: meta
+  Course: Mixed Effects Modeling
+  Lesson: Linear Mixed-Effects Modeling in R (Brown 2021)
+  Author: Robin Welsch
+  Type: Standard
+  Organization: Graduate Statistics
+  Version: 1.0.0
+
+- Class: text
+  Output: >
+    This lesson presents a complete tutorial on linear mixed-effects modeling.
+    Mixed-effects models extend linear regression to situations in which
+    observations are not independent, such as repeated measurements from the
+    same participants or responses to the same items.
+
+- Class: text
+  Output: >
+    Ordinary regression and repeated-measures ANOVA handle such data poorly
+    because they either ignore dependence or require aggregation, which discards
+    trial-level variability and reduces statistical power.
+
+- Class: text
+  Output: >
+    Mixed-effects models address this problem by modeling dependence directly.
+    They separate population-level effects, called fixed effects, from structured
+    variability associated with grouping factors such as participants and items,
+    called random effects.
+
+- Class: text
+  Output: >
+    Fixed effects describe average relationships that are assumed to generalize
+    beyond the observed sample. Random effects describe how intercepts and slopes
+    vary across grouping units. A random intercept allows baseline differences
+    across units, whereas a random slope allows the effect of a predictor to differ
+    across units.
+
+- Class: text
+  Output: >
+    Conceptually, mixed-effects models fit many regression lines simultaneously.
+    The fixed effects define the average regression line. Random effects allow
+    individual lines for participants or items to deviate from that average.
+
+- Class: text
+  Output: >
+    These deviations are assumed to follow a multivariate normal distribution
+    across units. All parameters are estimated jointly, which produces shrinkage:
+    unit-specific estimates are pulled toward the population mean in proportion
+    to their uncertainty.
+
+- Class: text
+  Output: >
+    Model specification encodes assumptions about the data-generating process.
+    Random slopes are justified only when predictors vary within the grouping
+    factor. Within these design constraints, theory should guide which random
+    effects are included.
+
+- Class: text
+  Output: >
+    Model comparison is commonly performed using likelihood-ratio tests between
+    nested models. These tests evaluate whether additional complexity improves
+    model fit, not whether an effect is large or substantively important.
+
+- Class: text
+  Output: >
+    Model selection has been criticized when it introduces researcher degrees of
+    freedom. Simplifying models purely to obtain convergence or significance
+    undermines inference. Decisions about random effects should be theoretically
+    motivated and reported transparently.
+
+- Class: text
+  Output: >
+    The lmer() function from the lme4 package fits linear mixed-effects models
+    using a formula syntax that extends ordinary regression notation. Random
+    effects are specified using parentheses and a vertical bar.
+
+- Class: text
+  Output: >
+    For example, (1 | PID) specifies a random intercept for participants, whereas
+    (1 + modality | PID) specifies both a random intercept and a random slope for
+    modality by participant.
+
+- Class: text
+  Output: >
+    With this conceptual framework in place, we now proceed to hands-on modeling.
+
+- Class: cmd_question
+  Output: >
+    Inspect the first six rows of the data to verify that it is in long format.
+  CorrectAnswer: head(rt_data)
+  AnswerTests: omnitest(correctExpr='head(rt_data)')
+  Hint: >
+    Use head() on the data frame.
+
+- Class: text
+  Output: >
+    Each row represents a single trial-level observation. Mixed-effects models
+    require unaggregated long-format data.
+
+- Class: cmd_question
+  Output: >
+    Confirm that participant IDs and items are factors.
+  CorrectAnswer: str(rt_data)
+  AnswerTests: omnitest(correctExpr='str(rt_data)')
+  Hint: >
+    Use str() to inspect variable types.
+
+- Class: text
+  Output: >
+    We use dummy coding with Audio-only as the reference level. Under this coding,
+    the intercept represents the mean in the Audio-only condition.
+
+- Class: cmd_question
+  Output: >
+    Fit a fixed-effects-only regression predicting RT from modality.
+  CorrectAnswer: m_lm <- lm(RT ~ modality, data = rt_data)
+  AnswerTests: any_of_exprs(
+    'm_lm <- lm(RT ~ modality, data = rt_data)',
+    'm_lm=lm(RT ~ modality, data = rt_data)'
+  )
+  Hint: >
+    Use lm() and assign the model to m_lm.
+
+- Class: text
+  Output: >
+    This model violates the independence assumption because it ignores the
+    repeated-measures structure of the data.
+
+- Class: cmd_question
+  Output: >
+    Load the lme4 package.
+  CorrectAnswer: library(lme4)
+  AnswerTests: omnitest(correctExpr='library(lme4)')
+  Hint: >
+    Use library(lme4).
+
+- Class: cmd_question
+  Output: >
+    Fit a model with a random intercept for participants.
+  CorrectAnswer: m_pid_int <- lmer(RT ~ modality + (1|PID), data = rt_data)
+  AnswerTests: any_of_exprs(
+    'm_pid_int <- lmer(RT ~ modality + (1|PID), data = rt_data)',
+    'm_pid_int=lmer(RT ~ modality + (1|PID), data = rt_data)'
+  )
+  Hint: >
+    Add (1|PID) to the model.
+
+- Class: text
+  Output: >
+    This model accounts for participant-level dependence but ignores item
+    variability.
+
+- Class: cmd_question
+  Output: >
+    Fit a crossed random-intercepts model with participants and items.
+  CorrectAnswer: m_ints <- lmer(RT ~ modality + (1|PID) + (1|stim), data = rt_data)
+  AnswerTests: any_of_exprs(
+    'm_ints <- lmer(RT ~ modality + (1|PID) + (1|stim), data = rt_data)',
+    'm_ints=lmer(RT ~ modality + (1|PID) + (1|stim), data = rt_data)'
+  )
+  Hint: >
+    Include random intercepts for both PID and stim.
+
+- Class: text
+  Output: >
+    Random slopes are justified when predictors vary within grouping factors.
+
+- Class: cmd_question
+  Output: >
+    Add a random slope for modality by participant.
+  CorrectAnswer: m_pid_slope <- lmer(RT ~ modality + (1 + modality|PID) + (1|stim), data = rt_data)
+  AnswerTests: any_of_exprs(
+    'm_pid_slope <- lmer(RT ~ modality + (1 + modality|PID) + (1|stim), data = rt_data)',
+    'm_pid_slope=lmer(RT ~ modality + (1 + modality|PID) + (1|stim), data = rt_data)'
+  )
+  Hint: >
+    Add modality inside the PID random-effects term.
+
+- Class: cmd_question
+  Output: >
+    Fit the maximal model with random slopes by participants and items.
+  CorrectAnswer: m_full <- lmer(RT ~ modality + (1 + modality|PID) + (1 + modality|stim), data = rt_data)
+  AnswerTests: any_of_exprs(
+    'm_full <- lmer(RT ~ modality + (1 + modality|PID) + (1 + modality|stim), data = rt_data)',
+    'm_full=lmer(RT ~ modality + (1 + modality|PID) + (1 + modality|stim), data = rt_data)'
+  )
+  Hint: >
+    Include slopes for both grouping factors.
+
+- Class: text
+  Output: >
+    We now compare nested models using likelihood-ratio tests.
+
+- Class: cmd_question
+  Output: >
+    Compare the random-intercepts model to the maximal model.
+  CorrectAnswer: anova(m_ints, m_full)
+  AnswerTests: omnitest(correctExpr='anova(m_ints, m_full)')
+  Hint: >
+    Use anova() with the simpler model first.
+
+- Class: text
+  Output: >
+    We now test the fixed effect of modality.
+
+- Class: cmd_question
+  Output: >
+    Fit the reduced model without modality as a fixed effect.
+  CorrectAnswer: m_reduced <- lmer(RT ~ 1 + (1 + modality|PID) + (1 + modality|stim), data = rt_data)
+  AnswerTests: any_of_exprs(
+    'm_reduced <- lmer(RT ~ 1 + (1 + modality|PID) + (1 + modality|stim), data = rt_data)',
+    'm_reduced=lmer(RT ~ 1 + (1 + modality|PID) + (1 + modality|stim), data = rt_data)'
+  )
+  Hint: >
+    Remove modality from the fixed-effects portion only.
+
+- Class: cmd_question
+  Output: >
+    Conduct the likelihood-ratio test for modality.
+  CorrectAnswer: anova(m_reduced, m_full)
+  AnswerTests: omnitest(correctExpr='anova(m_reduced, m_full)')
+  Hint: >
+    Compare reduced and full models.
+
+- Class: cmd_question
+  Output: >
+    Examine the summary of the full model.
+  CorrectAnswer: summary(m_full)
+  AnswerTests: omnitest(correctExpr='summary(m_full)')
+  Hint: >
+    Use summary().
+
+- Class: text
+  Output: >
+    Fixed effects describe average effects. Random-effects variances describe
+    how much participants and items differ from those averages. Correlations
+    among random effects can be substantively informative.
+
+- Class: cmd_question
+  Output: >
+    Extract participant-specific intercepts and slopes.
+  CorrectAnswer: coef(m_full)$PID
+  AnswerTests: omnitest(correctExpr='coef(m_full)$PID')
+  Hint: >
+    Use coef(m_full)$PID.
+
+- Class: text
+  Output: >
+    Convergence problems may arise with rich random-effects structures.
+
+- Class: cmd_question
+  Output: >
+    Refit the full model using the bobyqa optimizer.
+  CorrectAnswer: m_full_bobyqa <- lmer(RT ~ modality + (1 + modality|PID) + (1 + modality|stim),
+                                      data = rt_data,
+                                      control = lmerControl(optimizer = "bobyqa"))
+  AnswerTests: any_of_exprs(
+    'm_full_bobyqa <- lmer(RT ~ modality + (1 + modality|PID) + (1 + modality|stim), data = rt_data, control = lmerControl(optimizer = "bobyqa"))'
+  )
+  Hint: >
+    Specify the optimizer via lmerControl().
+
+- Class: text
+  Output: >
+    We now extend the framework to interactions.
+
+- Class: cmd_question
+  Output: >
+    Fit a model with an interaction between modality and SNR.
+  CorrectAnswer: m_int <- lmer(RT ~ modality * SNR + (1 + modality|PID) + (1 + modality|stim),
+                              data = rt_data_int)
+  AnswerTests: any_of_exprs(
+    'm_int <- lmer(RT ~ modality * SNR + (1 + modality|PID) + (1 + modality|stim), data = rt_data_int)'
+  )
+  Hint: >
+    Use modality * SNR.
+
+- Class: cmd_question
+  Output: >
+    Examine the interaction model.
+  CorrectAnswer: summary(m_int)
+  AnswerTests: omnitest(correctExpr='summary(m_int)')
+  Hint: >
+    Use summary().
+
+- Class: text
+  Output: >
+    We now analyze a binary outcome using a generalized linear mixed-effects model.
+
+- Class: cmd_question
+  Output: >
+    Fit a logistic mixed-effects model predicting accuracy.
+  CorrectAnswer: m_glmer <- glmer(accuracy ~ modality + (1 + modality|PID) + (1 + modality|stim),
+                                 data = acc_data,
+                                 family = binomial)
+  AnswerTests: any_of_exprs(
+    'm_glmer <- glmer(accuracy ~ modality + (1 + modality|PID) + (1 + modality|stim), data = acc_data, family = binomial)'
+  )
+  Hint: >
+    Use glmer() with family = binomial.
+
+- Class: cmd_question
+  Output: >
+    View the summary of the logistic model.
+  CorrectAnswer: summary(m_glmer)
+  AnswerTests: omnitest(correctExpr='summary(m_glmer)')
+  Hint: >
+    Use summary().
+
+- Class: text
+  Output: >
+    Logistic mixed-effects models estimate effects on the log-odds scale.
+
+- Class: text
+  Output: >
+    Reporting should include the model formula, justification of random effects,
+    convergence handling, likelihood-ratio tests, and coefficient estimates.
+
+- Class: text
+  Output: >
+    You have completed a full tutorial on linear and generalized linear
+    mixed-effects modeling.
