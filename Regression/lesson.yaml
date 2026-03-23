@@ -88,7 +88,7 @@
   Output: Since the scale is from 1-7, you might realize that this sentence sounds pretty meaningless. And indeed, many times interpreting the bare intercept is (What does age=0 even mean?). Many times, we will actually center our explanatory variables that are non-factors in order to make the intercept more interpretable.
 
 - Class: text
-  Output: Importantly, if done correctly, the only thing that will change is the (Intercept) estimate - centering variables has no effect on the estiamte of itself or on any other variable within the model (but it may decrease the standard error). 
+  Output: Importantly, if done correctly, the only thing that will change is the (Intercept) estimate - centering variables has no effect on the estimate of itself or on any other variable within the model (but it may decrease the standard error). 
   
 - Class: text
   Output: You can also add interaction terms (sometimes called moderation terms) into the formula.
@@ -125,10 +125,10 @@
   Output: While in linear models, we can read Estimates as "a one unit increase in [explanatory variable] is associated with an [estimate] increase in [response variable], it gets a bit more confusing for logistic regressions."
 
 - Class: text
-  Output: What is currently being reported is what is known as the log odds. Therefore, a one unit increase in Condition (which simply means moving from Nice to Selfish) is associatd with a .55 decrease in log odds that you would not enforce the rule.
+  Output: What is currently being reported is what is known as the log odds. Therefore, a one unit increase in Condition (which simply means moving from Nice to Selfish) is associated with a .55 decrease in log odds that you would not enforce the rule.
 
 - Class: text
-  Output: But what are log odds? They're tough to conceptualize, and the recommended practice is to convert them into Odds Ratios. To do that, we need to expotentiate the log odds- doing so will give us our Odds Ratios.
+  Output: But what are log odds? They're tough to conceptualize, and the recommended practice is to convert them into Odds Ratios. To do that, we need to exponentiate the log odds- doing so will give us our Odds Ratios.
   
 - Class: cmd_question
   Output: Hit up on your keyboard to get to your glm() code. Instead of summary(), change that to coef(). This will have R just output the coefficients (what we want to change!). After that, pipe that into exp(). 
