@@ -77,7 +77,7 @@
 - Class: cmd_question
   Output: Hit the up arrow until you get to your CheatData |> select() |> table() call. From there, we want to pipe another thing - chisq_test() from the rstatix package (which has been loaded for you). Include correct=FALSE in the call to chisq_test().
   CorrectAnswer: CheatData |> select(repCor,condition) |> table() |> chisq_test(correct=FALSE)
-  AnswerTests: omnitest(correctExpr='CheatData |> select(repCor,condition) |> table() |> chisq_test(, correct=FALSE)')
+  AnswerTests: omnitest(correctExpr='CheatData |> select(repCor,condition) |> table() |> chisq_test(correct=FALSE)')
   Hint: Try CheatData |> select(repCor,condition) |> table() |> chisq_test(correct=FALSE).
   
 - Class: text
@@ -91,7 +91,7 @@
 - Class: cmd_question
   Output: Hit the up arrow until you get to your CheatData |> select() |> table() |> chisq_test()  call. From there, we want to pipe another thing - chisq_descriptives().
   CorrectAnswer: CheatData |> select(repCor,condition) |> table() |> chisq_test(correct=FALSE) |> chisq_descriptives()
-  AnswerTests: omnitest(correctExpr='CheatData |> select(repCor,condition) |> table() |> chisq_test(, correct=FALSE) |> chisq_descriptives()')
+  AnswerTests: omnitest(correctExpr='CheatData |> select(repCor,condition) |> table() |> chisq_test(correct=FALSE) |> chisq_descriptives()')
   Hint: Try CheatData |> select(repCor,condition) |> table() |> chisq_test(correct=FALSE) |> chisq_descriptives()
   
 - Class: mult_question
